@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".penyedia.BuattokoActivty"></activity>
+        <activity android:name=".TambahBarangActivity"></activity>
+        <activity android:name=".penyedia.BuattokoActivity" />
         <activity android:name=".penyedia.Penyedia" />
         <activity android:name=".penyewa.Penyewa" />
         <activity android:name=".LengkapiBiodataActivity" />

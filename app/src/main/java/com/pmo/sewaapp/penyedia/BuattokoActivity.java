@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +33,6 @@ import com.pmo.sewaapp.R;
 import com.pmo.sewaapp.globalval;
 import com.pmo.sewaapp.models.tokomodel;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -42,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BuattokoActivty extends AppCompatActivity {
+public class BuattokoActivity extends AppCompatActivity {
 
     @BindView(R.id.iv_prev_banner)
     ImageView ivPrevBanner;
@@ -166,7 +164,7 @@ public class BuattokoActivty extends AppCompatActivity {
                         databaseReference.child(globalval.TABLE_TOKO).child(firebaseAuth.getCurrentUser().getUid()).setValue(tokomodel).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(BuattokoActivty.this,"Berhasil",Toast.LENGTH_LONG).show();
+                                Toast.makeText(BuattokoActivity.this,"Berhasil",Toast.LENGTH_LONG).show();
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -176,7 +174,7 @@ public class BuattokoActivty extends AppCompatActivity {
                             }
                         });
                     }else {
-                        Toast.makeText(BuattokoActivty.this,"gagal",Toast.LENGTH_LONG).show();
+                        Toast.makeText(BuattokoActivity.this,"gagal",Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -198,7 +196,7 @@ public class BuattokoActivty extends AppCompatActivity {
                 if(cek()){
                     uploadImage();
                 }else {
-                    Toast.makeText(BuattokoActivty.this,"Harap Isi semua",Toast.LENGTH_LONG).show();
+                    Toast.makeText(BuattokoActivity.this,"Harap Isi semua",Toast.LENGTH_LONG).show();
                 }
                 break;
         }

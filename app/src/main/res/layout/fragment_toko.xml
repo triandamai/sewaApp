@@ -82,6 +82,7 @@
                         android:textColor="#ffff"
                         android:text="Toko Suka Maju"/>
                     <ImageView
+                        android:id="@+id/iv_edit_toko"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_weight="0.1"
@@ -119,5 +120,15 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
     </ScrollView>
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 </FrameLayout>

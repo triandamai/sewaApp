@@ -1,19 +1,21 @@
 package com.pmo.sewaapp.models;
 
 public class barangmodel {
-    String idbarang , kategori,idtoko,stoktersedia,stokasli,hargasewa;
+    String idbarang , kategori,idtoko,stoktersedia,stokasli,hargasewa,gambar,nama;
 
     public barangmodel() {
 
     }
 
-    public barangmodel(String idbarang, String kategori, String idtoko, String stoktersedia, String stokasli, String hargasewa) {
+    public barangmodel(String idbarang, String kategori, String idtoko, String stoktersedia, String stokasli, String hargasewa, String gambar, String nama) {
         this.idbarang = idbarang;
         this.kategori = kategori;
         this.idtoko = idtoko;
         this.stoktersedia = stoktersedia;
         this.stokasli = stokasli;
         this.hargasewa = hargasewa;
+        this.gambar = gambar;
+        this.nama = nama;
     }
 
     public String getIdbarang() {
@@ -62,6 +64,22 @@ public class barangmodel {
 
     public void setHargasewa(String hargasewa) {
         this.hargasewa = hargasewa;
+    }
+
+    public String getGambar() {
+        return gambar;
+    }
+
+    public void setGambar(String gambar) {
+        this.gambar = gambar;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 }
 

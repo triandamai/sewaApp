@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pmo.sewaapp.R;
 import com.pmo.sewaapp.models.barangmodel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,16 @@ public class adapter_list_barang_toko extends RecyclerView.Adapter<adapter_list_
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.ivBarang.setIm
+        Picasso.get().load(data.get(position).getGambar()).into(holder.ivBarang);
+        holder.tvNamabarang.setText(data.get(position).getNama());
+
+        holder.ivBarang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     @Override

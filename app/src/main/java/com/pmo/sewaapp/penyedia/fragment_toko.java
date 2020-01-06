@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pmo.sewaapp.R;
+import com.pmo.sewaapp.TambahBarangActivity;
 import com.pmo.sewaapp.globalval;
 import com.pmo.sewaapp.models.barangmodel;
 
@@ -45,6 +48,10 @@ public class fragment_toko extends Fragment {
     LinearLayout barangKosong;
     @BindView(R.id.rv_barang_toko)
     RecyclerView rvBarangToko;
+    @BindView(R.id.iv_edit_toko)
+    ImageView ivEditToko;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -94,30 +101,41 @@ public class fragment_toko extends Fragment {
                     }
                 });
     }
+
     public void fetchBarang() {
         databaseReference.child(globalval.TABLE_BARANG).orderByChild("idtoko").equalTo(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     barangKosong.setVisibility(View.GONE);
                     rvBarangToko.setVisibility(View.VISIBLE);
-                    Toast.makeText(getContext(),"ada",Toast.LENGTH_LONG).show();
-                }else {
+                    Toast.makeText(getContext(), "ada", Toast.LENGTH_LONG).show();
+                } else {
                     barangKosong.setVisibility(View.VISIBLE);
                     rvBarangToko.setVisibility(View.GONE);
-                    Toast.makeText(getContext(),"tidak ada",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "tidak ada", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(),"database Error"+databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "database Error" + databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    @OnClick(R.id.btn_buattoko)
-    public void onViewClicked() {
-        startActivity(new Intent(getContext(), BuattokoActivty.class));
+
+    @OnClick({R.id.iv_edit_toko, R.id.fab_add,R.id.btn_buattoko})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_edit_toko:
+                break;
+            case R.id.fab_add:
+                startActivity(new Intent(getContext(), TambahBarangActivity.class));
+                break;
+            case R.id.btn_buattoko:
+                startActivity(new Intent(getContext(), BuattokoActivity.class));
+                break;
+        }
     }
 }
