@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "291522517470",
+    "firebase_url": "https://sewaapp-bb1c4.firebaseio.com",
+    "project_id": "sewaapp-bb1c4",
+    "storage_bucket": "sewaapp-bb1c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291522517470:android:1f3594205b9bbb3c63654f",
+        "android_client_info": {
+          "package_name": "com.pmo.sewaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291522517470-54bq8jaech3v8ha3c0vsabb6e6gqe4qt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pmo.sewaapp",
+            "certificate_hash": "5ce992c54564f7ed00280c063564767bdd732955"
+          }
+        },
+        {
+          "client_id": "291522517470-hrd656k64tu477o28tkkssub2gg4e08a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaTsInu0jmHRuI17Fi8WLArWI0sZ9cleU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291522517470-hrd656k64tu477o28tkkssub2gg4e08a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
