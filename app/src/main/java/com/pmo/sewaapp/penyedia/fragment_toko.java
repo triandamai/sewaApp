@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import com.pmo.sewaapp.R;
 import com.pmo.sewaapp.TambahBarangActivity;
 import com.pmo.sewaapp.globalval;
 import com.pmo.sewaapp.models.barangmodel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,10 @@ public class fragment_toko extends Fragment {
     ImageView ivEditToko;
     @BindView(R.id.fab_add)
     FloatingActionButton fabAdd;
+    @BindView(R.id.iv_bannerToko)
+    ImageView ivBannerToko;
+    @BindView(R.id.tv_nama_toko)
+    TextView tvNamaToko;
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -69,6 +75,7 @@ public class fragment_toko extends Fragment {
         // Inflate the layout for this fragment
         View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_toko, container, false);
         ButterKnife.bind(this, v);
+
         loadingToko.setVisibility(View.VISIBLE);
         tokoKosong.setVisibility(View.GONE);
         adaData.setVisibility(View.GONE);
@@ -89,6 +96,10 @@ public class fragment_toko extends Fragment {
 
                             tokoKosong.setVisibility(View.GONE);
                             adaData.setVisibility(View.VISIBLE);
+                            String namatoko = dataSnapshot.child("namatoko").getValue(String.class);
+                            String banner = dataSnapshot.child("bannertoko").getValue(String.class);
+                            Picasso.get().load(banner).into(ivBannerToko);
+                            tvNamaToko.setText(namatoko);
                         } else {
                             tokoKosong.setVisibility(View.VISIBLE);
                             adaData.setVisibility(View.GONE);
@@ -125,7 +136,7 @@ public class fragment_toko extends Fragment {
     }
 
 
-    @OnClick({R.id.iv_edit_toko, R.id.fab_add,R.id.btn_buattoko})
+    @OnClick({R.id.iv_edit_toko, R.id.fab_add, R.id.btn_buattoko})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_edit_toko:

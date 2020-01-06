@@ -1,7 +1,14 @@
 package com.pmo.sewaapp.models;
 
 public class barangmodel {
-    String idbarang , kategori,idtoko,stoktersedia,stokasli,hargasewa,gambar,nama;
+    String idbarang ,
+            kategori,
+            idtoko,
+            stoktersedia,
+            stokasli,
+            hargasewa,
+            gambar,
+            nama;
 
     public barangmodel() {
 
