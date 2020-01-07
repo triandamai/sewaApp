@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,12 +27,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pmo.sewaapp.R;
 import com.pmo.sewaapp.TambahBarangActivity;
+import com.pmo.sewaapp.adapters.adapter_list_barang_toko;
 import com.pmo.sewaapp.globalval;
 import com.pmo.sewaapp.models.barangmodel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +66,7 @@ public class fragment_toko extends Fragment {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private List<barangmodel> listBarang = new ArrayList<>();
+    private adapter_list_barang_toko adapter ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,13 +119,28 @@ public class fragment_toko extends Fragment {
     }
 
     public void fetchBarang() {
+
         databaseReference.child(globalval.TABLE_BARANG).orderByChild("idtoko").equalTo(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listBarang.clear();
                 if (dataSnapshot.exists()) {
                     barangKosong.setVisibility(View.GONE);
                     rvBarangToko.setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), "ada", Toast.LENGTH_LONG).show();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                        barangmodel barangmodel;
+
+                        barangmodel = ds.getValue(barangmodel.class);
+                        assert barangmodel != null;
+                        barangmodel.setIdbarang(ds.getKey());
+                        listBarang.add(barangmodel);
+                    }
+
+                    adapter = new adapter_list_barang_toko(getContext(),listBarang);
+                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+                    rvBarangToko.setLayoutManager(layoutManager);
+                    rvBarangToko.setAdapter(adapter);
                 } else {
                     barangKosong.setVisibility(View.VISIBLE);
                     rvBarangToko.setVisibility(View.GONE);

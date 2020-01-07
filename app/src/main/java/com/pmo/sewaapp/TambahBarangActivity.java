@@ -38,6 +38,7 @@ import com.pmo.sewaapp.penyedia.BuattokoActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -145,6 +146,7 @@ public class TambahBarangActivity extends AppCompatActivity {
                             barangmodel.setNama(etNamabarang.getText().toString());
                             barangmodel.setStokasli(etStok.getText().toString());
                             barangmodel.setStoktersedia(etStok.getText().toString());
+                            barangmodel.setWaktuditambah(new Date().getTime());
 
                             databaseReference.child(globalval.TABLE_BARANG).child(id).setValue(barangmodel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

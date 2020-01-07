@@ -25,6 +25,8 @@
         android:id="@+id/btn_kirimKode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffff"
+        android:background="#FF9800"
         android:text="Kirim Kode"/>
     <View
         android:layout_width="match_parent"
@@ -39,5 +41,7 @@
         android:id="@+id/btn_Verifikasi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffff"
+        android:background="#FF9800"
         android:text="Verifikasi"/>
 </LinearLayout>

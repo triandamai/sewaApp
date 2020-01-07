@@ -77,7 +77,12 @@
                 android:id="@+id/btn_simpan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#ffff"
+                android:background="#FF9800"
                 android:text="Simpan"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

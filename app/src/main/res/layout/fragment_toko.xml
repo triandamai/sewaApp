@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
     tools:context=".penyedia.fragment_toko">
 
     <LinearLayout
@@ -11,6 +14,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="gone"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="#ffff"
         android:orientation="vertical">
         <ImageView
             android:layout_width="match_parent"
@@ -33,6 +39,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
+        android:background="#ffff"
         android:layout_height="match_parent">
         <ProgressBar
             android:layout_width="50dp"
@@ -96,13 +103,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="Barang Tersedia"/>
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:text="Barang Ditoko Ini"/>
             <LinearLayout
                 android:id="@+id/barang_kosong"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:background="#ffff"
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="match_parent"
@@ -129,8 +139,12 @@
             android:id="@+id/fab_add"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            app:maxImageSize="40dp"
+            android:layout_alignWithParentIfMissing="true"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="45dp"
+            android:src="@drawable/ic_add_black"
+            android:scaleType="center"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>

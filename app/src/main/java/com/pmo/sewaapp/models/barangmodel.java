@@ -9,12 +9,13 @@ public class barangmodel {
             hargasewa,
             gambar,
             nama;
+    long waktuditambah;
 
     public barangmodel() {
 
     }
 
-    public barangmodel(String idbarang, String kategori, String idtoko, String stoktersedia, String stokasli, String hargasewa, String gambar, String nama) {
+    public barangmodel(String idbarang, String kategori, String idtoko, String stoktersedia, String stokasli, String hargasewa, String gambar, String nama, long waktuditambah) {
         this.idbarang = idbarang;
         this.kategori = kategori;
         this.idtoko = idtoko;
@@ -23,6 +24,7 @@ public class barangmodel {
         this.hargasewa = hargasewa;
         this.gambar = gambar;
         this.nama = nama;
+        this.waktuditambah = waktuditambah;
     }
 
     public String getIdbarang() {
@@ -87,6 +89,14 @@ public class barangmodel {
 
     public void setNama(String nama) {
         this.nama = nama;
+    }
+
+    public long getWaktuditambah() {
+        return waktuditambah;
+    }
+
+    public void setWaktuditambah(long waktuditambah) {
+        this.waktuditambah = waktuditambah;
     }
 }
 

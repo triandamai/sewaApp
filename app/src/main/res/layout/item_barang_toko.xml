@@ -5,17 +5,32 @@
     android:layout_width="200dp"
     android:layout_height="200dp"
     android:layout_margin="5dp">
-    <ImageView
-        android:id="@+id/iv_barang"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/barang_kosong"/>
-    <TextView
-        android:id="@+id/tv_namabarang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Nama Barang"/>
+        android:layout_height="match_parent"
+        android:elevation="5dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/iv_barang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/barang_kosong"/>
+            <TextView
+                android:id="@+id/tv_namabarang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#CEFF9800"
+                android:layout_alignParentLeft="true"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textColor="#ffff"
+                android:text="Nama Barang"/>
 
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
