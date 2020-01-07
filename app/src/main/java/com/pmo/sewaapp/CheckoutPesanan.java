@@ -112,6 +112,7 @@ public class CheckoutPesanan extends AppCompatActivity {
                 addData(1);
                 break;
             case R.id.btn_ceckout:
+                cekoutnow();
                 break;
         }
     }

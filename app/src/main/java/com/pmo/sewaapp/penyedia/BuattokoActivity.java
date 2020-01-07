@@ -155,6 +155,7 @@ public class BuattokoActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if(task.isSuccessful()){
+                        progressDialog.dismiss();
                         Uri donloadUri = task.getResult();
                         tokomodel tokomodel = new tokomodel();
                         tokomodel.setBannertoko(donloadUri.toString());

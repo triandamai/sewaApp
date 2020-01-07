@@ -148,7 +148,11 @@ public class TambahBarangActivity extends AppCompatActivity {
                             barangmodel.setStoktersedia(etStok.getText().toString());
                             barangmodel.setWaktuditambah(new Date().getTime());
 
-                            databaseReference.child(globalval.TABLE_BARANG).child(id).setValue(barangmodel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            databaseReference
+                                    .child(globalval.TABLE_BARANG)
+                                    .child(id)
+                                    .setValue(barangmodel)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(context,"Berhasil",Toast.LENGTH_LONG).show();
@@ -165,9 +169,6 @@ public class TambahBarangActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-
             }
         }else {
             Toast.makeText(context,"Mohon Isi Semua",Toast.LENGTH_LONG).show();

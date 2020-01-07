@@ -28,11 +28,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class fragment_home extends Fragment {
-
-
     @BindView(R.id.dataKosong)
     LinearLayout dataKosong;
     @BindView(R.id.rv_barang_terbaru)
@@ -48,6 +47,7 @@ public class fragment_home extends Fragment {
     }
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,8 @@ public class fragment_home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
+
         fetchTerbaru();
         return v;
     }
@@ -73,15 +74,16 @@ public class fragment_home extends Fragment {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         barangmodel barangmodel;
                         barangmodel = data.getValue(barangmodel.class);
+
                         assert barangmodel != null;
                         barangmodel.setIdbarang(data.getKey());
                         listBarang.add(barangmodel);
                     }
-                    adapter = new adapter_list_barang_terbaru(getContext(),listBarang);
-  LinearLayoutManager layoutManager
+                    adapter = new adapter_list_barang_terbaru(getContext(), listBarang);
+                    LinearLayoutManager layoutManager
                             = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-                     rvBarangTerbaru.setLayoutManager(layoutManager);
+                    rvBarangTerbaru.setLayoutManager(layoutManager);
                     rvBarangTerbaru.setAdapter(adapter);
                 } else {
                     Toast.makeText(getContext(), "Tidak ada data", Toast.LENGTH_LONG).show();
