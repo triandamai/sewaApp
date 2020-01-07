@@ -47,7 +47,7 @@ public class Register extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private Context context = Register.this;
-    private String verificationid;
+    private String verificationid ;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @Override
@@ -105,8 +105,9 @@ public class Register extends AppCompatActivity {
                 }
                 break;
             case R.id.btn_Verifikasi:
-                if (!verificationid.isEmpty()) {
-                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationid, etVerifikasi.getText().toString());
+                if (!verificationid.isEmpty() || verificationid != null) {
+                    PhoneAuthCredential credential =
+                            PhoneAuthProvider.getCredential(verificationid, etVerifikasi.getText().toString());
                     signInwithPhoneNumber(credential);
                 }
                 break;
@@ -119,7 +120,8 @@ public class Register extends AppCompatActivity {
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 etVerifikasi.setText(code);
-                firebaseAuth.signInWithCredential(phoneAuthCredential);
+             //   firebaseAuth.signInWithCredential(phoneAuthCredential);
+                signInwithPhoneNumber(phoneAuthCredential);
             }
 
         }

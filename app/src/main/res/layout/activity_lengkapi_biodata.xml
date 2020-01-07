@@ -48,7 +48,7 @@
                 android:id="@+id/et_Email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="trian@gmail.com"/>
+                android:hint="jonojono@gmail.com"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

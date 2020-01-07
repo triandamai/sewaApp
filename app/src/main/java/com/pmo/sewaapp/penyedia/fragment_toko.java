@@ -127,7 +127,7 @@ public class fragment_toko extends Fragment {
                 if (dataSnapshot.exists()) {
                     barangKosong.setVisibility(View.GONE);
                     rvBarangToko.setVisibility(View.VISIBLE);
-                    Toast.makeText(getContext(), "ada", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "ada", Toast.LENGTH_LONG).show();
                     for (DataSnapshot ds : dataSnapshot.getChildren()){
                         barangmodel barangmodel;
 

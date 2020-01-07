@@ -72,8 +72,7 @@ public class adapter_list_barang_terbaru extends RecyclerView.Adapter<adapter_li
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, DetailBarangActivity.class)
-                        .putExtra("idBarang",data.get(position).getIdbarang())
-                .putExtra("idToko",data.get(position).getIdtoko()));
+                        .putExtra("idBarang",data.get(position).getIdbarang()).putExtra("idToko",data.get(position).getIdtoko()));
             }
         });
 

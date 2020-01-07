@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".penyedia.fragment_history">
 
 
@@ -10,37 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_lay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/btnproses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#2196F3"
-                android:textColor="#ffff"
-                android:layout_weight="1"
-                android:text="Proses"/>
-            <Button
-                android:id="@+id/btnselesai"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#4CAF50"
-                android:textColor="#ffff"
-                android:layout_weight="1"
-                android:text="Selesai"/>
-            <Button
-                android:id="@+id/btntolak"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#F44336"
-                android:textColor="#ffff"
-                android:layout_weight="1"
-                android:text="Ditolak"/>
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_transaksi"
+            android:layout_height="?actionBarSize"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="#ffff"
+            app:tabBackground="@color/colorPrimary"
+            >
+
+        </com.google.android.material.tabs.TabLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

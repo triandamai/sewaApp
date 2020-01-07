@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pmo.sewaapp.models.barangmodel;
 import com.pmo.sewaapp.models.tokomodel;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,40 +64,47 @@ public class DetailBarangActivity extends AppCompatActivity {
                 }
             },200);
         }else {
-            this.idToko = intent.getStringExtra("idToko");
-            this.idBarang = intent.getStringExtra("idBarang");
+            idToko = intent.getStringExtra("idToko");
+            idBarang = intent.getStringExtra("idBarang");
+          //  Toast.makeText(context,"toko"+idToko+" barang "+idBarang,Toast.LENGTH_LONG).show();
             fetchDataBarang();
             fetchDataToko();
         }
     }
 
     private void fetchDataBarang(){
-        databaseReference.child(globalval.TABLE_BARANG).child(idToko).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(globalval.TABLE_BARANG).child(idBarang).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-
                     barangmodel = dataSnapshot.getValue(barangmodel.class);
                     assert barangmodel != null;
                     tvNamabarang.setText(barangmodel.getNama());
                     tvHarga.setText("Rp "+barangmodel.getHargasewa());
                     tvStok.setText(barangmodel.getStokasli());
+                    Picasso.get().load(barangmodel.getGambar()).into(ivGambarBarang);
+
+                   // Toast.makeText(context,barangmodel.getGambar(),Toast.LENGTH_LONG).show();
                     if(idToko.equals(barangmodel.getIdtoko())){
+
                         btnPesan.setEnabled(false);
+                        btnPesan.setVisibility(View.GONE);
                     }else {
                         btnPesan.setEnabled(true);
+                        btnPesan.setVisibility(View.VISIBLE);
                     }
 
                 }else {
-
+                    Toast.makeText(context,"Tidak ada",Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(context,"Tidak ada"+databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
+       // Picasso.get().load(barangmodel.getGambar().toString()).into(ivGambarBarang);
     }
     private void fetchDataToko(){
         databaseReference.child(globalval.TABLE_TOKO).child(idToko).addValueEventListener(new ValueEventListener() {
@@ -106,6 +115,7 @@ public class DetailBarangActivity extends AppCompatActivity {
                     tokomodel = dataSnapshot.getValue(tokomodel.class);
                     assert  tokomodel != null;
                     tvNamatoko.setText(tokomodel.getNamatoko().toString());
+
                 }else {
 
                 }
