@@ -17,10 +17,9 @@
             android:layout_height="?actionBarSize"
             app:tabGravity="fill"
             app:tabIndicatorColor="#ffff"
+            app:tabTextColor="#020202"
             app:tabBackground="@color/colorPrimary"
-            >
-
-        </com.google.android.material.tabs.TabLayout>
+            />
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp"
             android:layout_width="match_parent"
