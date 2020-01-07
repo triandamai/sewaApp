@@ -1,13 +1,17 @@
 package com.pmo.sewaapp.penyedia;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,8 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pmo.sewaapp.R;
 import com.pmo.sewaapp.adapters.adapter_list_barang_terbaru;
+import com.pmo.sewaapp.adapters.adapterkategori;
 import com.pmo.sewaapp.globalval;
 import com.pmo.sewaapp.models.barangmodel;
+import com.pmo.sewaapp.models.kategorimodel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +42,20 @@ public class fragment_home extends Fragment {
     LinearLayout dataKosong;
     @BindView(R.id.rv_barang_terbaru)
     RecyclerView rvBarangTerbaru;
+    @BindView(R.id.btn_add)
+    Button btnAdd;
+    @BindView(R.id.rv_kategori)
+    RecyclerView rvKategori;
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private List<barangmodel> listBarang = new ArrayList<>();
+    private List<kategorimodel> kategorimodelList = new ArrayList<>();
     private adapter_list_barang_terbaru adapter;
-
-    public fragment_home() {
-        // Required empty public constructor
-    }
-
+    private adapterkategori adapterkategori;
+    AlertDialog.Builder dialog;
+    LayoutInflater inflater;
+    View dialogView;
 
 
     @Override
@@ -61,7 +71,38 @@ public class fragment_home extends Fragment {
         ButterKnife.bind(this, v);
 
         fetchTerbaru();
+        fetchKatgori();
         return v;
+    }
+
+    public void fetchKatgori() {
+        databaseReference.child(globalval.TABLE_KATEGORI).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        kategorimodel kategorimodel;
+                        kategorimodel = data.getValue(kategorimodel.class);
+                        kategorimodel.setIdkategori(data.getKey().toString());
+                        assert kategorimodel != null;
+                        kategorimodelList.add(kategorimodel);
+                    }
+
+                    adapterkategori = new adapterkategori(getContext(), kategorimodelList);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    rvKategori.setLayoutManager(layoutManager);
+                    rvKategori.setAdapter(adapterkategori);
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void fetchTerbaru() {
@@ -95,5 +136,38 @@ public class fragment_home extends Fragment {
 
             }
         });
+    }
+
+    private void DialogForm() {
+        dialog = new AlertDialog.Builder(getContext());
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.item_add_kategori,null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+        dialog.setTitle("Tambah Kategori");
+        EditText nama = dialogView.findViewById(R.id.nama_kategori);
+
+        dialog.setPositiveButton("SIMPAN", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String id = databaseReference.push().getKey();
+                kategorimodel kategorimodel = new kategorimodel();
+                kategorimodel.setIdkategori(id);
+                kategorimodel.setNamakategori(nama.getText().toString());
+                databaseReference.child(globalval.TABLE_KATEGORI).child(id).setValue(kategorimodel);
+            }
+        });
+        dialog.setNegativeButton("BATAL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+    @OnClick(R.id.btn_add)
+    public void onViewClicked() {
+        DialogForm();
     }
 }

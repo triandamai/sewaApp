@@ -62,15 +62,31 @@
                       android:layout_height="wrap_content"
                       android:padding="10dp"
                       android:orientation="vertical">
-                      <TextView
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:text="Kategori"/>
                       <LinearLayout
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:orientation="horizontal">
-
+                          <TextView
+                              android:layout_weight="1"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="Kategori"/>
+                          <Button
+                              android:id="@+id/btn_add"
+                              android:layout_width="wrap_content"
+                              android:layout_height="40dp"
+                              android:text="Tambah"/>
+                      </LinearLayout>
+                      <LinearLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="10dp"
+                          android:orientation="horizontal">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_kategori"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
                       </LinearLayout>
                   </LinearLayout>
               </androidx.cardview.widget.CardView>
