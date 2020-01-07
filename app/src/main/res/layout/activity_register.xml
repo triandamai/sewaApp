@@ -15,33 +15,45 @@
         android:layout_marginBottom="50dp"
         android:textSize="24dp"
         android:text="Gunakan nomor telpon untuk mendaftar!"/>
-    <EditText
-        android:id="@+id/et_nomerTelp"
+    <LinearLayout
+        android:id="@+id/ll_inputnomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:hint="Masukkan Nomor telpon"/>
-    <Button
-        android:id="@+id/btn_kirimKode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#ffff"
-        android:background="#FF9800"
-        android:text="Kirim Kode"/>
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/et_nomerTelp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="Masukkan Nomor telpon"/>
+        <Button
+            android:id="@+id/btn_kirimKode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffff"
+            android:background="#FF9800"
+            android:text="Kirim Kode"/>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="20dp"/>
-    <EditText
-        android:id="@+id/et_verifikasi"
+    <LinearLayout
+        android:id="@+id/ll_terimakode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Masukkan Kode"/>
-    <Button
-        android:id="@+id/btn_Verifikasi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#ffff"
-        android:background="#FF9800"
-        android:text="Verifikasi"/>
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/et_verifikasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Masukkan Kode"/>
+        <Button
+            android:id="@+id/btn_Verifikasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffff"
+            android:background="#FF9800"
+            android:text="Verifikasi"/>
+    </LinearLayout>
 </LinearLayout>

@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pmo.sewaapp.LengkapiBiodataActivity;
 import com.pmo.sewaapp.R;
+import com.pmo.sewaapp.Register;
 import com.pmo.sewaapp.globalval;
 import com.pmo.sewaapp.models.usermodel;
 
@@ -41,9 +42,12 @@ public class fragment_profile extends Fragment {
     TextView etEmail;
     @BindView(R.id.btn_ubah)
     Button btnUbah;
+    @BindView(R.id.btn_signOut)
+    Button btnSignOut;
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
     public fragment_profile() {
         // Required empty public constructor
     }
@@ -64,32 +68,46 @@ public class fragment_profile extends Fragment {
         return v;
     }
 
-    public void fetch(){
+    public void fetch() {
         databaseReference.child(globalval.TABLE_USER).child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     usermodel model = new usermodel();
                     model = dataSnapshot.getValue(usermodel.class);
                     tvNama.setText(String.valueOf(model.getNama()));
                     tvNamaTelp.setText(String.valueOf(model.nohp));
                     etEmail.setText(String.valueOf(model.getEmail()));
                     tvAlamat.setText(String.valueOf(model.getAlamat()));
-                }else {
-                    Toast.makeText(getContext(),"TIdak ada apapun",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "TIdak ada apapun", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(),"Database Eror "+databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Database Eror " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    @OnClick(R.id.btn_ubah)
-    public void onViewClicked() {
-        startActivity(new Intent(getActivity().getApplicationContext(), LengkapiBiodataActivity.class).putExtra("uid",firebaseAuth.getCurrentUser().getUid()));
+    @OnClick({R.id.btn_ubah,R.id.btn_signOut})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_ubah:
+                startActivity(new Intent(getActivity().getApplicationContext(), LengkapiBiodataActivity.class)
+                        .putExtra("uid", firebaseAuth.getCurrentUser()
+                                .getUid()));
+                break;
+            case R.id.btn_signOut:
+                firebaseAuth.signOut();
+                getContext().startActivity(new Intent(getContext(), Register.class));
+                getActivity().finish();
+                break;
+        }
+
 
     }
+
+
 }

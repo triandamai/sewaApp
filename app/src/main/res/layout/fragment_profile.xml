@@ -59,7 +59,19 @@
                 android:id="@+id/btn_ubah"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#FFC107"
+                android:textColor="#ffff"
                 android:text="Ubah"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <Button
+                android:id="@+id/btn_signOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F44336"
+                android:textColor="#ffff"
+                android:text="Keluar"/>
 
         </LinearLayout>
     </ScrollView>

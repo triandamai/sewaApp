@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,10 @@ public class Register extends AppCompatActivity {
     EditText etVerifikasi;
     @BindView(R.id.btn_Verifikasi)
     Button btnVerifikasi;
+    @BindView(R.id.ll_inputnomer)
+    LinearLayout llInputnomer;
+    @BindView(R.id.ll_terimakode)
+    LinearLayout llTerimakode;
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private Context context = Register.this;
@@ -51,21 +56,23 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
 
-
+        llInputnomer.setVisibility(View.VISIBLE);
+        llTerimakode.setVisibility(View.GONE);
     }
 
-    public  void sendAuthenticationCode(String phonenumber){
-        Toast.makeText(context,"Mengirim",Toast.LENGTH_LONG).show();
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(phonenumber,60, TimeUnit.SECONDS,this,callback);
+    public void sendAuthenticationCode(String phonenumber) {
+        Toast.makeText(context, "Mengirim", Toast.LENGTH_LONG).show();
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(phonenumber, 60, TimeUnit.SECONDS, this, callback);
     }
-    public  void signInwithPhoneNumber(PhoneAuthCredential phoneAuthCredential){
-        Toast.makeText(context,"Memverifikasi..",Toast.LENGTH_LONG).show();
+
+    public void signInwithPhoneNumber(PhoneAuthCredential phoneAuthCredential) {
+        Toast.makeText(context, "Memverifikasi..", Toast.LENGTH_LONG).show();
         firebaseAuth.signInWithCredential(phoneAuthCredential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(context,"Berhasil",Toast.LENGTH_LONG).show();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(context, "Berhasil", Toast.LENGTH_LONG).show();
                             databaseReference
                                     .child(globalval.TABLE_USER)
                                     .child(firebaseAuth.getUid())
@@ -74,42 +81,52 @@ public class Register extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            startActivity(new Intent(context,LengkapiBiodataActivity.class));
+                                            startActivity(new Intent(context, LengkapiBiodataActivity.class));
                                             finish();
                                         }
                                     });
-                        }else {
-                            Toast.makeText(context,"gagal"+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(context, "gagal" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
 
                     }
                 });
     }
+
     @OnClick({R.id.btn_kirimKode, R.id.btn_Verifikasi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_kirimKode:
-                if (!etNomerTelp.getText().toString().isEmpty()){
+
+                if (!etNomerTelp.getText().toString().isEmpty()) {
+                    llInputnomer.setVisibility(View.GONE);
+                    llTerimakode.setVisibility(View.VISIBLE);
                     sendAuthenticationCode(etNomerTelp.getText().toString());
                 }
                 break;
             case R.id.btn_Verifikasi:
-                if(!verificationid.isEmpty()){
-                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationid,etVerifikasi.getText().toString());
+                if (!verificationid.isEmpty()) {
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationid, etVerifikasi.getText().toString());
                     signInwithPhoneNumber(credential);
                 }
                 break;
         }
     }
+
     PhoneAuthProvider.OnVerificationStateChangedCallbacks callback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-            firebaseAuth.signInWithCredential(phoneAuthCredential);
+            String code = phoneAuthCredential.getSmsCode();
+            if (code != null) {
+                etVerifikasi.setText(code);
+                firebaseAuth.signInWithCredential(phoneAuthCredential);
+            }
+
         }
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
-            Toast.makeText(context,"Verifikasi gagal"+e.toString(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Verifikasi gagal" + e.toString(), Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -117,5 +134,7 @@ public class Register extends AppCompatActivity {
             super.onCodeSent(s, forceResendingToken);
             Register.this.verificationid = s;
         }
+
+
     };
 }

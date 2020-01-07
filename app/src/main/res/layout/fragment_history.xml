@@ -5,10 +5,43 @@
     android:layout_height="match_parent"
     tools:context=".penyedia.fragment_history">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnproses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#2196F3"
+                android:textColor="#ffff"
+                android:layout_weight="1"
+                android:text="Proses"/>
+            <Button
+                android:id="@+id/btnselesai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#4CAF50"
+                android:textColor="#ffff"
+                android:layout_weight="1"
+                android:text="Selesai"/>
+            <Button
+                android:id="@+id/btntolak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#F44336"
+                android:textColor="#ffff"
+                android:layout_weight="1"
+                android:text="Ditolak"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_transaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </FrameLayout>
