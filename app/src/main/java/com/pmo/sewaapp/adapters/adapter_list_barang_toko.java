@@ -54,6 +54,8 @@ public class adapter_list_barang_toko extends RecyclerView.Adapter<adapter_list_
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, DetailBarangActivity.class)
+                        .putExtra("isOwner","yes")
+                        .putExtra("idBarang",data.get(position).getIdbarang())
                         .putExtra("idToko",data.get(position).getIdtoko()));
             }
         });

@@ -103,6 +103,7 @@ public class TambahBarangActivity extends AppCompatActivity {
             }
         });
     }
+    //upload
     public void upload(){
         if(cek()){
             if (filePath != null) {

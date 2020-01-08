@@ -1,10 +1,12 @@
 package com.pmo.sewaapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -16,11 +18,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.pmo.sewaapp.DetailTransaksi;
 import com.pmo.sewaapp.R;
 import com.pmo.sewaapp.globalval;
 import com.pmo.sewaapp.models.barangmodel;
 import com.pmo.sewaapp.models.transaksimodel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,7 +32,7 @@ import butterknife.ButterKnife;
 
 public class adapter_list_history extends RecyclerView.Adapter<adapter_list_history.MyViewHolder> {
 
-    private List<transaksimodel> data;
+    private List<transaksimodel> data = new ArrayList<>();
     private Context context;
     private barangmodel barangmodel;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -48,6 +52,15 @@ public class adapter_list_history extends RecyclerView.Adapter<adapter_list_hist
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
+        //pindah ke halamn detail dan menampilkan detailnya
+        holder.cvParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // Toast.makeText(context,data.get(position).getIdTransaksi(),Toast.LENGTH_LONG).show();
+               context.startActivity(new Intent(context, DetailTransaksi.class).putExtra("idTransaksi",data.get(position).getIdTransaksi()));
+            }
+        });
         databaseReference.child(globalval.TABLE_BARANG).child(data.get(position).getIDBARANG()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

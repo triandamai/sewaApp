@@ -75,6 +75,33 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textSize="26sp"/>
+    <LinearLayout
+        android:id="@+id/lladaedit"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_hapus"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F44336"
+            android:textColor="#ffff"
+            android:text="Hapus"/>
+        <Button
+            android:id="@+id/btn_ubah"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#4CAF50"
+            android:textColor="#ffff"
+            android:text="Ubah"/>
+    </LinearLayout>
     <Button
         android:id="@+id/btn_pesan"
         android:layout_alignParentBottom="true"

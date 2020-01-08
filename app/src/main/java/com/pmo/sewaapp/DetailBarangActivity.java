@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,13 +42,20 @@ public class DetailBarangActivity extends AppCompatActivity {
     TextView tvHarga;
     @BindView(R.id.btn_pesan)
     Button btnPesan;
+    @BindView(R.id.btn_hapus)
+    Button btnHapus;
+    @BindView(R.id.btn_ubah)
+    Button btnUbah;
+    @BindView(R.id.lladaedit)
+    LinearLayout lladaedit;
 
     private Context context = DetailBarangActivity.this;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private String idToko,idBarang;
+    private String idToko, idBarang;
     private tokomodel tokomodel = new tokomodel();
-    private  barangmodel barangmodel = new barangmodel();
+    private barangmodel barangmodel = new barangmodel();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,68 +63,75 @@ public class DetailBarangActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        if(!intent.hasExtra("idToko") || !intent.hasExtra("idBarang")){
-            Toast.makeText(context,"Gagal Mendapatkan data",Toast.LENGTH_LONG).show();
+        if (!intent.hasExtra("idToko") || !intent.hasExtra("idBarang")) {
+            Toast.makeText(context, "Gagal Mendapatkan data", Toast.LENGTH_LONG).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     finish();
                 }
-            },200);
-        }else {
+            }, 200);
+        } else {
             idToko = intent.getStringExtra("idToko");
             idBarang = intent.getStringExtra("idBarang");
-          //  Toast.makeText(context,"toko"+idToko+" barang "+idBarang,Toast.LENGTH_LONG).show();
+            //  Toast.makeText(context,"toko"+idToko+" barang "+idBarang,Toast.LENGTH_LONG).show();
+            if (intent.hasExtra("isOwner")) {
+                lladaedit.setVisibility(View.VISIBLE);
+                btnPesan.setVisibility(View.GONE);
+            }
             fetchDataBarang();
             fetchDataToko();
         }
     }
 
-    private void fetchDataBarang(){
+    private void fetchDataBarang() {
         databaseReference.child(globalval.TABLE_BARANG).child(idBarang).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     barangmodel = dataSnapshot.getValue(barangmodel.class);
                     assert barangmodel != null;
                     tvNamabarang.setText(barangmodel.getNama());
-                    tvHarga.setText("Rp "+barangmodel.getHargasewa());
+                    tvHarga.setText("Rp " + barangmodel.getHargasewa());
                     tvStok.setText(barangmodel.getStokasli());
                     Picasso.get().load(barangmodel.getGambar()).into(ivGambarBarang);
 
-                   // Toast.makeText(context,barangmodel.getGambar(),Toast.LENGTH_LONG).show();
-                    if(idToko.equals(barangmodel.getIdtoko())){
+                    // Toast.makeText(context,barangmodel.getGambar(),Toast.LENGTH_LONG).show();
+                    if (firebaseAuth.getCurrentUser().getUid().equals(barangmodel.getIdtoko())) {
 
                         btnPesan.setEnabled(false);
                         btnPesan.setVisibility(View.GONE);
-                    }else {
+                        lladaedit.setVisibility(View.VISIBLE);
+                    } else {
                         btnPesan.setEnabled(true);
                         btnPesan.setVisibility(View.VISIBLE);
+                        lladaedit.setVisibility(View.GONE);
                     }
 
-                }else {
-                    Toast.makeText(context,"Tidak ada",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Tidak ada", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(context,"Tidak ada"+databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Tidak ada" + databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-       // Picasso.get().load(barangmodel.getGambar().toString()).into(ivGambarBarang);
+        // Picasso.get().load(barangmodel.getGambar().toString()).into(ivGambarBarang);
     }
-    private void fetchDataToko(){
+
+    private void fetchDataToko() {
         databaseReference.child(globalval.TABLE_TOKO).child(idToko).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
 
                     tokomodel = dataSnapshot.getValue(tokomodel.class);
-                    assert  tokomodel != null;
+                    assert tokomodel != null;
                     tvNamatoko.setText(tokomodel.getNamatoko().toString());
 
-                }else {
+                } else {
 
                 }
             }
@@ -128,10 +143,22 @@ public class DetailBarangActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.btn_pesan)
-    public void onViewClicked() {
-        startActivity(new Intent(context,CheckoutPesanan.class).putExtra("idBarang",idBarang));
 
-        Toast.makeText(context,barangmodel.getIdbarang(),Toast.LENGTH_LONG).show();
+    @OnClick({R.id.btn_hapus, R.id.btn_ubah, R.id.btn_pesan})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_hapus:
+                databaseReference.child(globalval.TABLE_BARANG).child(idBarang).removeValue();
+                finish();
+                break;
+            case R.id.btn_ubah:
+                startActivity(new Intent(context, TambahBarangActivity.class).putExtra("id", idBarang));
+                break;
+            case R.id.btn_pesan:
+                startActivity(new Intent(context, CheckoutPesanan.class).putExtra("idBarang", idBarang));
+
+                Toast.makeText(context, barangmodel.getIdbarang(), Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 }

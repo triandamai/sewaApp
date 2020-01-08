@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,7 +34,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,11 +61,13 @@ public class fragment_toko extends Fragment {
     ImageView ivBannerToko;
     @BindView(R.id.tv_nama_toko)
     TextView tvNamaToko;
+    @BindView(R.id.rl_fab)
+    RelativeLayout rlFab;
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private List<barangmodel> listBarang = new ArrayList<>();
-    private adapter_list_barang_toko adapter ;
+    private adapter_list_barang_toko adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class fragment_toko extends Fragment {
         adaData.setVisibility(View.GONE);
         barangKosong.setVisibility(View.GONE);
         rvBarangToko.setVisibility(View.GONE);
+        rlFab.setVisibility(View.GONE);
         fetch();
         fetchBarang();
         return v;
@@ -101,11 +103,13 @@ public class fragment_toko extends Fragment {
 
                             tokoKosong.setVisibility(View.GONE);
                             adaData.setVisibility(View.VISIBLE);
+                            rlFab.setVisibility(View.VISIBLE);
                             String namatoko = dataSnapshot.child("namatoko").getValue(String.class);
                             String banner = dataSnapshot.child("bannertoko").getValue(String.class);
                             Picasso.get().load(banner).into(ivBannerToko);
                             tvNamaToko.setText(namatoko);
                         } else {
+                            rlFab.setVisibility(View.GONE);
                             tokoKosong.setVisibility(View.VISIBLE);
                             adaData.setVisibility(View.GONE);
                         }
@@ -128,7 +132,7 @@ public class fragment_toko extends Fragment {
                     barangKosong.setVisibility(View.GONE);
                     rvBarangToko.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity().getApplicationContext(), "ada", Toast.LENGTH_LONG).show();
-                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         barangmodel barangmodel;
 
                         barangmodel = ds.getValue(barangmodel.class);
@@ -137,8 +141,8 @@ public class fragment_toko extends Fragment {
                         listBarang.add(barangmodel);
                     }
 
-                    adapter = new adapter_list_barang_toko(getContext(),listBarang);
-                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+                    adapter = new adapter_list_barang_toko(getContext(), listBarang);
+                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
                     rvBarangToko.setLayoutManager(layoutManager);
                     rvBarangToko.setAdapter(adapter);
                 } else {

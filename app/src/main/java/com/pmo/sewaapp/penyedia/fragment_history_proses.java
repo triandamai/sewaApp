@@ -68,6 +68,7 @@ public class fragment_history_proses extends Fragment {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         transaksimodel transaksimodel;
                         transaksimodel = data.getValue(transaksimodel.class);
+                        transaksimodel.setIdTransaksi(data.getKey());
 
                         transaksimodels.add(transaksimodel);
                     }
