@@ -123,7 +123,7 @@ public class CheckoutPesanan extends AppCompatActivity {
         transaksimodel.setIDPENYEWA(firebaseAuth.getCurrentUser().getUid());
         transaksimodel.setIDTOKO(barangmodel.getIdtoko());
         transaksimodel.setAlamat(etAlamat.getText().toString());
-        transaksimodel.setBuktipembayaran("kosong");
+        transaksimodel.setBuktipembayaran("1");
         transaksimodel.setStatus("Menunggu Pembayaran");
         transaksimodel.setJumlah(String.valueOf(this.jumlahTotal));
         transaksimodel.setHarga(String.valueOf(this.hargaTotal));

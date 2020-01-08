@@ -60,6 +60,7 @@ public class LengkapiBiodataActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     usermodel model = new usermodel();
                     model = dataSnapshot.getValue(usermodel.class);
+                    assert model != null;
                     etNama.setText(String.valueOf(model.getNama()));
                     etNohp.setText(String.valueOf(model.nohp));
                     etEmail.setText(String.valueOf(model.getEmail()));

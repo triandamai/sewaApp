@@ -81,7 +81,7 @@ public class Register extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            startActivity(new Intent(context, LengkapiBiodataActivity.class));
+                                            startActivity(new Intent(context, LengkapiBiodataActivity.class).putExtra("uid",firebaseAuth.getCurrentUser().getUid()));
                                             finish();
                                         }
                                     });
