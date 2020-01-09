@@ -36,18 +36,24 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
-              <androidx.cardview.widget.CardView
+              <RelativeLayout
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content">
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="200dp">
-                  <ImageView
+                  android:layout_height="230dp"
+                  android:paddingTop="10dp"
+                  android:paddingLeft="10dp"
+                  android:paddingRight="10dp"
+                  android:paddingBottom="10dp"
+                  android:layout_weight="2"
+
+                  android:layout_marginBottom="20dp">
+
+                  <ViewFlipper
+                      android:id="@+id/v_flipper"
                       android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:src="@drawable/toko_kosong"/>
-              </LinearLayout>
-              </androidx.cardview.widget.CardView>
+                      android:layout_height="230dp"
+                      android:layout_centerHorizontal="true">
+                  </ViewFlipper>
+              </RelativeLayout>
               <androidx.cardview.widget.CardView
                   android:layout_width="match_parent"
                   android:elevation="10dp"
@@ -90,13 +96,36 @@
                       </LinearLayout>
                   </LinearLayout>
               </androidx.cardview.widget.CardView>
-              <TextView
+              <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginLeft="10dp"
-                  android:text="Barang Terbaru"/>
+                  android:orientation="horizontal">
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:layout_marginLeft="10dp"
+                      android:text="Barang Terbaru"/>
+                  <TextView
+                      android:id="@+id/tv_btn_view_all"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:textAlignment="textEnd"
+                      android:layout_marginLeft="10dp"
+                      android:textColor="#FF5722"
+                      android:text="Lihat Semua"
+                      android:layout_marginRight="20dp"
+                      android:gravity="end" />
+              </LinearLayout>
               <androidx.recyclerview.widget.RecyclerView
                   android:id="@+id/rv_barang_terbaru"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:padding="10dp"
+                  android:orientation="horizontal"/>
+              <androidx.recyclerview.widget.RecyclerView
+                  android:id="@+id/rv_barang_tokoku"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:padding="10dp"

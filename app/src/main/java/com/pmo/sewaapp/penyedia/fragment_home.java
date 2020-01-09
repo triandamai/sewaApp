@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -46,6 +48,8 @@ public class fragment_home extends Fragment {
     Button btnAdd;
     @BindView(R.id.rv_kategori)
     RecyclerView rvKategori;
+    @BindView(R.id.v_flipper)
+    ViewFlipper vFlipper;
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -69,10 +73,37 @@ public class fragment_home extends Fragment {
                              Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, v);
-
+        slideshow();
         fetchTerbaru();
         fetchKatgori();
         return v;
+    }
+
+    private void slideshow() {
+        int images[] = {
+          R.drawable.banner1,
+          R.drawable.banner2,
+          R.drawable.banner3
+        };
+
+        for(int i = 0; i<images.length; i++){
+            fliverImage(images[i] );
+        }
+        for (int image : images)
+            fliverImage(image);
+    }
+
+    private void fliverImage(int image) {
+        ImageView imageView = new ImageView(getContext());
+        imageView.setBackgroundResource(image);
+        vFlipper.addView(imageView);
+        vFlipper.setFlipInterval(3500);
+        vFlipper.setAutoStart(true);
+
+        vFlipper.setInAnimation(getContext(),android.R.anim.slide_in_left);
+        vFlipper.setOutAnimation(getContext(),android.R.anim.slide_out_right);
+
+
     }
 
     public void fetchKatgori() {
@@ -141,7 +172,7 @@ public class fragment_home extends Fragment {
     private void DialogForm() {
         dialog = new AlertDialog.Builder(getContext());
         inflater = getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.item_add_kategori,null);
+        dialogView = inflater.inflate(R.layout.item_add_kategori, null);
         dialog.setView(dialogView);
         dialog.setCancelable(true);
         dialog.setTitle("Tambah Kategori");
@@ -166,6 +197,7 @@ public class fragment_home extends Fragment {
 
         dialog.show();
     }
+
     @OnClick(R.id.btn_add)
     public void onViewClicked() {
         DialogForm();
