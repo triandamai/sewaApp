@@ -15,6 +15,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <ImageView
+                android:id="@+id/iv_barang"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/histoy_kosong"/>

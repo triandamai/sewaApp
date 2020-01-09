@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -23,6 +23,7 @@ import com.pmo.sewaapp.R;
 import com.pmo.sewaapp.globalval;
 import com.pmo.sewaapp.models.barangmodel;
 import com.pmo.sewaapp.models.transaksimodel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class adapter_list_history extends RecyclerView.Adapter<adapter_list_history.MyViewHolder> {
+
 
     private List<transaksimodel> data = new ArrayList<>();
     private Context context;
@@ -57,20 +59,23 @@ public class adapter_list_history extends RecyclerView.Adapter<adapter_list_hist
         holder.cvParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Toast.makeText(context,data.get(position).getIdTransaksi(),Toast.LENGTH_LONG).show();
-               context.startActivity(new Intent(context, DetailTransaksi.class).putExtra("idTransaksi",data.get(position).getIdTransaksi()));
+                // Toast.makeText(context,data.get(position).getIdTransaksi(),Toast.LENGTH_LONG).show();
+                context.startActivity(new Intent(context, DetailTransaksi.class).putExtra("idTransaksi", data.get(position).getIdTransaksi()));
             }
         });
         databaseReference.child(globalval.TABLE_BARANG).child(data.get(position).getIDBARANG()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     barangmodel = dataSnapshot.getValue(barangmodel.class);
-                    assert  barangmodel != null;
+                    barangmodel.setIdbarang(dataSnapshot.getKey());
+                    assert barangmodel != null;
                     holder.tvNamaBarang.setText(barangmodel.getNama());
                     holder.tvAlamat.setText(data.get(position).getAlamat());
-                    holder.tvHarga.setText(data.get(position).getHarga()+" Status "+data.get(position).getStatus());
-                }else {
+                    holder.tvHarga.setText(data.get(position).getHarga() + " Status " + data.get(position).getStatus());
+                    Picasso.get().load(barangmodel.getGambar()).into(holder.ivBarang);
+
+                } else {
 
                 }
             }
@@ -80,6 +85,8 @@ public class adapter_list_history extends RecyclerView.Adapter<adapter_list_hist
 
             }
         });
+
+
     }
 
     @Override
@@ -96,10 +103,12 @@ public class adapter_list_history extends RecyclerView.Adapter<adapter_list_hist
         TextView tvHarga;
         @BindView(R.id.cv_parent)
         CardView cvParent;
+        @BindView(R.id.iv_barang)
+        ImageView ivBarang;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

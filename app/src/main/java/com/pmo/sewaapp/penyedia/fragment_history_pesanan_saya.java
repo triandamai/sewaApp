@@ -29,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class fragment_history_gagal extends Fragment {
+public class fragment_history_pesanan_saya extends Fragment {
 
 
     @BindView(R.id.rv_history)
@@ -43,22 +43,19 @@ public class fragment_history_gagal extends Fragment {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
     private List<transaksimodel> transaksimodels = new ArrayList<>();
-    private adapter_list_history adapter_list_history;
-
+    private com.pmo.sewaapp.adapters.adapter_list_history adapter_list_history;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_history_gagal, container, false);
-        ButterKnife.bind(this, v);
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_history_pesanan_saya, container, false);
+        ButterKnife.bind(this,v);
         lladadata.setVisibility(View.GONE);
         llkosong.setVisibility(View.GONE);
         llKosong.setVisibility(View.VISIBLE);
@@ -66,11 +63,11 @@ public class fragment_history_gagal extends Fragment {
         return v;
     }
 
-    public void fetchData() {
-        databaseReference.child(globalval.TABLE_TRANSAKSI).orderByChild("idpenyewa").endAt(firebaseAuth.getCurrentUser().getUid()).endAt(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+    private void fetchData() {
+        databaseReference.child(globalval.TABLE_TRANSAKSI).orderByChild("idpenyewa").startAt(firebaseAuth.getCurrentUser().getUid()).endAt(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
+                if(dataSnapshot.exists()) {
                     lladadata.setVisibility(View.VISIBLE);
                     llkosong.setVisibility(View.GONE);
                     llKosong.setVisibility(View.GONE);
@@ -85,7 +82,7 @@ public class fragment_history_gagal extends Fragment {
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                     rvHistory.setLayoutManager(layoutManager);
                     rvHistory.setAdapter(adapter_list_history);
-                } else {
+                }else {
                     lladadata.setVisibility(View.GONE);
                     llkosong.setVisibility(View.VISIBLE);
                     llKosong.setVisibility(View.GONE);
@@ -98,4 +95,5 @@ public class fragment_history_gagal extends Fragment {
             }
         });
     }
+
 }

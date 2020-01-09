@@ -44,6 +44,7 @@ public class fragment_history extends Fragment {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this,v);
             tabAdapter = new tabAdapter(getActivity().getSupportFragmentManager(),1);
+            tabAdapter.addFragment(new fragment_history_pesanan_saya(),"Pesanan Saya");
             tabAdapter.addFragment(new fragment_history_proses(),"Proses");
             tabAdapter.addFragment(new fragment_history_selesai(),"Selesai");
             tabAdapter.addFragment(new fragment_history_gagal(),"Gagal");

@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailTransaksi"></activity>
+        <activity android:name=".SemuaBarangKategori"></activity>
+        <activity android:name=".DetailTransaksi" />
         <activity android:name=".CheckoutPesanan" />
         <activity android:name=".DetailBarangActivity" />
         <activity android:name=".TambahBarangActivity" />

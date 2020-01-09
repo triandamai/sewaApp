@@ -37,11 +37,14 @@ public class fragment_history_selesai extends Fragment {
     LinearLayout lladadata;
     @BindView(R.id.llkosong)
     LinearLayout llkosong;
+    @BindView(R.id.ll_kosong)
+    LinearLayout llKosong;
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private List<transaksimodel> transaksimodels = new ArrayList<>();
     private adapter_list_history adapter_list_history;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,20 +56,26 @@ public class fragment_history_selesai extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_history_selesai, container, false);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
+        lladadata.setVisibility(View.GONE);
+        llkosong.setVisibility(View.GONE);
+        llKosong.setVisibility(View.VISIBLE);
+        fetchData();
         return v;
     }
 
     public void fetchData() {
-        databaseReference.child(globalval.TABLE_TRANSAKSI).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(globalval.TABLE_TRANSAKSI).orderByChild("idpenyewa").endAt(firebaseAuth.getCurrentUser().getUid()).endAt(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     lladadata.setVisibility(View.VISIBLE);
                     llkosong.setVisibility(View.GONE);
+                    llKosong.setVisibility(View.GONE);
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         transaksimodel transaksimodel;
                         transaksimodel = data.getValue(transaksimodel.class);
+                        transaksimodel.setIdTransaksi(data.getKey());
 
                         transaksimodels.add(transaksimodel);
                     }
@@ -77,13 +86,13 @@ public class fragment_history_selesai extends Fragment {
                 } else {
                     lladadata.setVisibility(View.GONE);
                     llkosong.setVisibility(View.VISIBLE);
+                    llKosong.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                lladadata.setVisibility(View.GONE);
-                llkosong.setVisibility(View.VISIBLE);
+
             }
         });
     }

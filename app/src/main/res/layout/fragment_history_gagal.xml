@@ -34,6 +34,15 @@
             android:textAlignment="center"
             android:text="Belum Ada History"/>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_kosong"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+    </LinearLayout>
 
 
 </FrameLayout>

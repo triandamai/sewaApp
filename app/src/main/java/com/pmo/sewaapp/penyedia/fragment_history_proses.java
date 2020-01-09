@@ -37,6 +37,8 @@ public class fragment_history_proses extends Fragment {
     LinearLayout lladadata;
     @BindView(R.id.llkosong)
     LinearLayout llkosong;
+    @BindView(R.id.ll_kosong)
+    LinearLayout llKosong;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private List<transaksimodel> transaksimodels = new ArrayList<>();
@@ -54,17 +56,22 @@ public class fragment_history_proses extends Fragment {
         // Inflate the layout for this fragment
         View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_history_proses, container, false);
         ButterKnife.bind(this, v);
+        lladadata.setVisibility(View.GONE);
+        llkosong.setVisibility(View.GONE);
+        llKosong.setVisibility(View.VISIBLE);
         fetchData();
         return v;
     }
 
     public void fetchData() {
-        databaseReference.child(globalval.TABLE_TRANSAKSI).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(globalval.TABLE_TRANSAKSI).orderByChild("idtoko").startAt(firebaseAuth.getCurrentUser().getUid()).endAt(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     lladadata.setVisibility(View.VISIBLE);
                     llkosong.setVisibility(View.GONE);
+                    llKosong.setVisibility(View.GONE);
+                    transaksimodels.clear();
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         transaksimodel transaksimodel;
                         transaksimodel = data.getValue(transaksimodel.class);
@@ -79,6 +86,7 @@ public class fragment_history_proses extends Fragment {
                 } else {
                     lladadata.setVisibility(View.GONE);
                     llkosong.setVisibility(View.VISIBLE);
+                    llKosong.setVisibility(View.GONE);
                 }
             }
 
@@ -86,6 +94,7 @@ public class fragment_history_proses extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 lladadata.setVisibility(View.GONE);
                 llkosong.setVisibility(View.VISIBLE);
+                llKosong.setVisibility(View.GONE);
             }
         });
     }
