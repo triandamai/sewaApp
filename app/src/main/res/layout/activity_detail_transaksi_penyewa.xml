@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffff"
+    android:orientation="vertical"
+    tools:context=".DetailTransaksiPenyewa">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:text="Detail Transaksi"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Bukti Transfer"/>
+            <ImageView
+                android:id="@+id/iv_gambar_bukti"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/histoy_kosong"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Nama Penyewa"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/tv_namaPenyewa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="Trian Damai"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Alamat Penyewa"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/tv_alamat_penyewa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="Jl.Pinus 9 no 4 kabupaten"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Total Sewa"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/tv_harga_sewa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="Rp 2000"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Status"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="Sudah Dikirim"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Durasi Sewa"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/tv_waktu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="Sudah Dikirim"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_buttonaksi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/btn_upload_bukti"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#03A9F4"
+                    android:textColor="#ffff"
+                    android:layout_margin="10dp"
+                    android:text="Kirim Bukti"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -69,7 +69,10 @@
                         <Button
                             android:id="@+id/btn_minus"
                             android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:background="#FF5722"
+                            android:layout_height="40dp"
+                            android:textColor="#ffff"
+                            android:textSize="20dp"
                             android:text="-"/>
                         <TextView
                             android:id="@+id/tv_jumlah"
@@ -81,7 +84,9 @@
                         <Button
                             android:id="@+id/btn_add"
                             android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_height="40dp"
+                            android:background="#FF5722"
+                            android:textColor="#ffff"
                             android:text="+"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -109,7 +114,7 @@
                     android:id="@+id/et_nama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Trian"/>
+                    android:hint="Donal trump"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,30 +125,65 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Jl. Amikom hsacf"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    android:text="Kapan Kamu Mau Menyewa ?"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Tanggal diambil"/>
+                <EditText
+                    android:id="@+id/et_tanggal_ambil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint=""/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Tanggal Kembali"/>
+                <EditText
+                    android:id="@+id/et_tanggal_kembali"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint=""/>
             </LinearLayout>
 
 
         </LinearLayout>
     </ScrollView>
-    <TextView
-        android:layout_above="@+id/btn_ceckout"
-        android:id="@+id/total_rp"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="Rp 20000"/>
-    <Button
-        android:id="@+id/btn_ceckout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="#FF9800"
-        android:textColor="#ffff"
-        android:layout_marginBottom="20dp"
-        android:text="Bayar Sekarang"/>
+        android:background="#ffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/total_rp"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="Rp 20000"/>
+        <Button
+            android:id="@+id/btn_ceckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#FF9800"
+            android:textColor="#ffff"
+            android:layout_marginBottom="20dp"
+            android:text="Bayar Sekarang"/>
+    </LinearLayout>
 </RelativeLayout>

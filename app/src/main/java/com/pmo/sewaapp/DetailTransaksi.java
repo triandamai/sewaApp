@@ -113,22 +113,6 @@ public class DetailTransaksi extends AppCompatActivity {
                     transaksimodel = dataSnapshot.getValue(transaksimodel.class);
                     transaksimodel.setIdTransaksi(dataSnapshot.getKey());
                     assert transaksimodel != null;
-                    ivGambarBukti.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (transaksimodel.getIDTOKO().equals(firebaseAuth.getCurrentUser().getUid())){
-
-                            }else {
-                                SelectImage();
-                            }
-                        }
-                    });
-                    if (transaksimodel.getIDTOKO().equals(firebaseAuth.getCurrentUser().getUid())){
-                        llButtonaksi.setVisibility(View.VISIBLE);
-
-                    }else {
-                        llButtonaksi.setVisibility(View.GONE);
-                    }
                     tvAlamatPenyewa.setText(transaksimodel.getAlamat());
                     tvHargaSewa.setText(transaksimodel.getHarga());
                     tvStatus.setText(transaksimodel.getStatus());
@@ -171,124 +155,7 @@ public class DetailTransaksi extends AppCompatActivity {
             }
         });
     }
-    //upload
-    public void upload(){
 
-            if (filePath != null) {
-
-                // Code for showing progressDialog while uploading
-                ProgressDialog progressDialog
-                        = new ProgressDialog(this);
-                progressDialog.setTitle("Uploading...");
-                progressDialog.show();
-                String id = databaseReference.push().getKey();
-                //
-                StorageReference myref = storageReference.child(globalval.TABLE_TRANSAKSI).child("images/" + id);
-                ivGambarBukti.setDrawingCacheEnabled(true);
-                ivGambarBukti.buildDrawingCache();
-                Bitmap bitmap = ((BitmapDrawable)ivGambarBukti.getDrawable()).getBitmap();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG,80,baos);
-                byte[] data = baos.toByteArray();
-
-                UploadTask uploadTask = myref.putBytes(data);
-                Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()){
-                            throw  task.getException();
-                        }
-                        return myref.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-
-                        if(task.isSuccessful()){
-                            Uri donloadUri = task.getResult();
-
-
-                            databaseReference
-                                    .child(globalval.TABLE_TRANSAKSI)
-                                    .child(mSettings.getString("idTransaksi","null"))
-                                    .child("buktipembayaran")
-                                    .setValue(donloadUri);
-                            progressDialog.dismiss();
-                            Toast.makeText(context,task.getException().toString(),Toast.LENGTH_LONG).show();
-
-                        }else {
-
-                            Toast.makeText(context,"gagal",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Log.d(TAG,e.getMessage());
-                        Toast.makeText(context,e.getMessage(),Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-                });
-
-            }
-
-    }
-
-    // Select Image method
-    private void SelectImage()
-    {
-
-        // Defining Implicit Intent to mobile gallery
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(
-                Intent.createChooser(
-                        intent,
-                        "Select Image from here..."),
-                PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // checking request code and result code
-        // if request code is PICK_IMAGE_REQUEST and
-        // resultCode is RESULT_OK
-        // then set image in the image view
-        if (requestCode == PICK_IMAGE_REQUEST
-                && resultCode == RESULT_OK
-                && data != null
-                && data.getData() != null) {
-
-            // Get the Uri of data
-            filePath = data.getData();
-            try {
-
-                // Setting image on image view using Bitmap
-                Bitmap bitmap = MediaStore
-                        .Images
-                        .Media
-                        .getBitmap(
-                                getContentResolver(),
-                                filePath);
-                ivGambarBukti.setImageBitmap(bitmap);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        upload();
-                    }
-                },200);
-
-            }
-
-            catch (IOException e) {
-                // Log the exception
-                e.printStackTrace();
-            }
-        }
-    }
     @OnClick({R.id.iv_gambar_bukti, R.id.btn_selesai, R.id.btn_tolak, R.id.btn_terima, R.id.ll_buttonaksi})
     public void onViewClicked(View view) {
         switch (view.getId()) {

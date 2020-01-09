@@ -67,7 +67,7 @@ public class fragment_history_gagal extends Fragment {
     }
 
     public void fetchData() {
-        databaseReference.child(globalval.TABLE_TRANSAKSI).orderByChild("idpenyewa").endAt(firebaseAuth.getCurrentUser().getUid()).endAt(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(globalval.TABLE_TRANSAKSI).orderByChild("idpenyewa").startAt(firebaseAuth.getCurrentUser().getUid()).endAt(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

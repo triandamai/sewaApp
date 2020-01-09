@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pmo.sewaapp.DetailTransaksi;
+import com.pmo.sewaapp.DetailTransaksiPenyewa;
 import com.pmo.sewaapp.R;
 import com.pmo.sewaapp.globalval;
 import com.pmo.sewaapp.models.barangmodel;
@@ -60,7 +61,11 @@ public class adapter_list_history extends RecyclerView.Adapter<adapter_list_hist
             @Override
             public void onClick(View v) {
                 // Toast.makeText(context,data.get(position).getIdTransaksi(),Toast.LENGTH_LONG).show();
-                context.startActivity(new Intent(context, DetailTransaksi.class).putExtra("idTransaksi", data.get(position).getIdTransaksi()));
+                if(data.get(position).getIDTOKO().equals(firebaseAuth.getCurrentUser().getUid())) {
+                    context.startActivity(new Intent(context, DetailTransaksi.class).putExtra("idTransaksi", data.get(position).getIdTransaksi()));
+                }else {
+                    context.startActivity(new Intent(context, DetailTransaksiPenyewa.class).putExtra("idTransaksi", data.get(position).getIdTransaksi()));
+                }
             }
         });
         databaseReference.child(globalval.TABLE_BARANG).child(data.get(position).getIDBARANG()).addValueEventListener(new ValueEventListener() {
