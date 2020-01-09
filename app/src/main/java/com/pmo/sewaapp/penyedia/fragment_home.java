@@ -46,8 +46,7 @@ public class fragment_home extends Fragment {
     RecyclerView rvBarangTerbaru;
     @BindView(R.id.btn_add)
     Button btnAdd;
-    @BindView(R.id.rv_kategori)
-    RecyclerView rvKategori;
+
     @BindView(R.id.v_flipper)
     ViewFlipper vFlipper;
 
@@ -75,7 +74,7 @@ public class fragment_home extends Fragment {
         ButterKnife.bind(this, v);
         slideshow();
         fetchTerbaru();
-        fetchKatgori();
+
         return v;
     }
 
@@ -106,35 +105,7 @@ public class fragment_home extends Fragment {
 
     }
 
-    public void fetchKatgori() {
-        databaseReference.child(globalval.TABLE_KATEGORI).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        kategorimodel kategorimodel;
-                        kategorimodel = data.getValue(kategorimodel.class);
-                        kategorimodel.setIdkategori(data.getKey().toString());
-                        assert kategorimodel != null;
-                        kategorimodelList.add(kategorimodel);
-                    }
 
-                    adapterkategori = new adapterkategori(getContext(), kategorimodelList);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                    rvKategori.setLayoutManager(layoutManager);
-                    rvKategori.setAdapter(adapterkategori);
-
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     public void fetchTerbaru() {
         databaseReference.child(globalval.TABLE_BARANG)
