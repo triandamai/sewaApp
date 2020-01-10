@@ -32,9 +32,9 @@ public class LengkapiBiodataActivity extends AppCompatActivity {
     EditText etNama;
     @BindView(R.id.et_Email)
     EditText etEmail;
-    @BindView(R.id.et_Nohp)
-    EditText etNohp;
-    @BindView(R.id.et_Alamat)
+//    @BindView(R.id.et_Nohp)
+//    EditText etNohp;
+   @BindView(R.id.et_Alamat)
     EditText etAlamat;
     @BindView(R.id.btn_simpan)
     Button btnSimpan;
@@ -48,12 +48,19 @@ public class LengkapiBiodataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lengkapi_biodata);
         ButterKnife.bind(this);
         Intent intent = getIntent();
+
+        //cek apakah ada data id user ? jika ada semua edit text diset
         if(intent.hasExtra("uid")){
             setVAl();
+        }else {
+            etEmail.setText("");
+            etAlamat.setText("");
+            etNama.setText("");
         }
     }
 
     private void setVAl() {
+        //ambil data untuk diset
         databaseReference.child(globalval.TABLE_USER).child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -61,10 +68,17 @@ public class LengkapiBiodataActivity extends AppCompatActivity {
                     usermodel model = new usermodel();
                     model = dataSnapshot.getValue(usermodel.class);
                     assert model != null;
-                    etNama.setText(String.valueOf(model.getNama()));
-                    etNohp.setText(String.valueOf(model.nohp));
-                    etEmail.setText(String.valueOf(model.getEmail()));
-                    etAlamat.setText(String.valueOf(model.getAlamat()));
+                    if(model.getNama() == null || model.getEmail() == null || model.getAlamat()== null){
+                        etEmail.setText("");
+                        etAlamat.setText("");
+                        etNama.setText("");
+                    }
+                   else {
+                        etNama.setText(String.valueOf(model.getNama()));
+                        // etNohp.setText(String.valueOf(model.nohp));
+                        etEmail.setText(String.valueOf(model.getEmail()));
+                        etAlamat.setText(String.valueOf(model.getAlamat()));
+                    }
                 }else {
                     Toast.makeText(LengkapiBiodataActivity.this,"TIdak ada apapun",Toast.LENGTH_LONG).show();
                 }
@@ -77,6 +91,7 @@ public class LengkapiBiodataActivity extends AppCompatActivity {
         });
     }
 
+    //method ketika tombol di klik
     @OnClick(R.id.btn_simpan)
     public void onViewClicked() {
         long time = new Date().getTime();
@@ -84,7 +99,7 @@ public class LengkapiBiodataActivity extends AppCompatActivity {
             usermodel user = new usermodel(
                     firebaseAuth.getUid().toString(),
                     etNama.getText().toString(),
-                    etNohp.getText().toString(),
+                  firebaseAuth.getCurrentUser().getPhoneNumber().toString(),
                     etAlamat.getText().toString(),
                     etEmail.getText().toString(),
                     "User",
@@ -100,6 +115,6 @@ public class LengkapiBiodataActivity extends AppCompatActivity {
     }
 
     private boolean cek(){
-        return !etAlamat.getText().toString().isEmpty() || !etEmail.getText().toString().isEmpty() || !etNohp.getText().toString().isEmpty() || !etNama.getText().toString().isEmpty();
+        return !etAlamat.getText().toString().isEmpty() || !etEmail.getText().toString().isEmpty()|| !etNama.getText().toString().isEmpty();
     }
 }

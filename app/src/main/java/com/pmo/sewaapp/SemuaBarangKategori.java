@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,17 +62,19 @@ public class SemuaBarangKategori extends AppCompatActivity {
             tampilPerkategori(intent.getStringExtra("Kategori"));
         } else {
             tvTitle.setText("Menampilkan Semua Barang");
-            tampilPerkategori("");
+            tampilSemua();
         }
     }
 
     private void tampilSemua() {
         databaseReference.child(globalval.TABLE_BARANG)
-                .orderByChild("waktuditambah").addValueEventListener(new ValueEventListener() {
+                .orderByChild("waktuditambah")
+                .limitToLast(20).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-
+                    barangmodelList.clear();
+                    Toast.makeText(context,"ada",Toast.LENGTH_LONG).show();
                     llAdadata.setVisibility(View.VISIBLE);
                     llKosong.setVisibility(View.GONE);
                     llLoading.setVisibility(View.GONE);
@@ -88,6 +91,7 @@ public class SemuaBarangKategori extends AppCompatActivity {
                     rvSemuaBarang.setLayoutManager(layoutManager);
                     rvSemuaBarang.setAdapter(adapter);
                 } else {
+                    Toast.makeText(context,"Ga ada",Toast.LENGTH_LONG).show();
                     llAdadata.setVisibility(View.GONE);
                     llKosong.setVisibility(View.VISIBLE);
                     llLoading.setVisibility(View.GONE);
@@ -96,7 +100,7 @@ public class SemuaBarangKategori extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(context,"Error "+databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -106,6 +110,7 @@ public class SemuaBarangKategori extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    barangmodelList.clear();
                     llAdadata.setVisibility(View.VISIBLE);
                     llKosong.setVisibility(View.GONE);
                     llLoading.setVisibility(View.GONE);
@@ -130,7 +135,7 @@ public class SemuaBarangKategori extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(context,"Error "+databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }

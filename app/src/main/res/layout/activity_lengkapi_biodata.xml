@@ -49,16 +49,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="jonojono@gmail.com"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="No Hp"
-                android:textStyle="bold"/>
-            <EditText
-                android:id="@+id/et_Nohp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="08122226266"/>
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="No Hp"-->
+<!--                android:textStyle="bold"/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/et_Nohp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="08122226266"/>-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

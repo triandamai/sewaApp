@@ -62,7 +62,7 @@ public class Register extends AppCompatActivity {
 
     public void sendAuthenticationCode(String phonenumber) {
         Toast.makeText(context, "Mengirim", Toast.LENGTH_LONG).show();
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(phonenumber, 60, TimeUnit.SECONDS, this, callback);
+        PhoneAuthProvider.getInstance().verifyPhoneNumber("+62"+phonenumber, 60, TimeUnit.SECONDS, this, callback);
     }
 
     public void signInwithPhoneNumber(PhoneAuthCredential phoneAuthCredential) {

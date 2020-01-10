@@ -53,7 +53,7 @@ public class adapter_list_barang_kategori extends RecyclerView.Adapter<adapter_l
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Picasso.get().load(barangmodelList.get(position).getGambar());
+        Picasso.get().load(barangmodelList.get(position).getGambar()).into(holder.ivBarang);
         holder.tvNamabarang.setText(barangmodelList.get(position).getNama());
         databaseReference.child(globalval.TABLE_TOKO).child(barangmodelList.get(position).getIdtoko()).addValueEventListener(new ValueEventListener() {
             @Override

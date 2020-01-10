@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.pmo.sewaapp.Kategori;
 import com.pmo.sewaapp.R;
 import com.pmo.sewaapp.SemuaBarangKategori;
 import com.pmo.sewaapp.adapters.adapter_list_barang_terbaru;
@@ -218,13 +219,13 @@ public class fragment_home extends Fragment {
                 startActivity(new Intent(getContext(), SemuaBarangKategori.class).putExtra("Kategori","Panahan"));
                 break;
             case R.id.ll_more:
-
+                startActivity(new Intent(getContext(), Kategori.class));
                 break;
             case R.id.ll_add:
                 DialogForm();
                 break;
             case R.id.tv_btn_view_all:
-                startActivity(new Intent(getContext(), SemuaBarangKategori.class).putExtra("Kategori","Semua"));
+                startActivity(new Intent(getContext(), SemuaBarangKategori.class));
                 break;
         }
     }
