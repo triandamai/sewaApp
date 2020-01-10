@@ -10,9 +10,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,12 +36,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.pmo.sewaapp.models.barangmodel;
-import com.pmo.sewaapp.models.tokomodel;
-import com.pmo.sewaapp.penyedia.BuattokoActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,20 +49,22 @@ import butterknife.OnClick;
 
 public class TambahBarangActivity extends AppCompatActivity {
 
-
+//deklarasi semua var
     private static final int PICK_IMAGE_REQUEST = 21;
     @BindView(R.id.iv_gambar)
     ImageView ivGambar;
     @BindView(R.id.et_Namabarang)
     EditText etNamabarang;
-    @BindView(R.id.et_Kategori)
-    EditText etKategori;
+//    @BindView(R.id.et_Kategori)
+//    EditText etKategori;
     @BindView(R.id.et_Stok)
     EditText etStok;
     @BindView(R.id.harga)
     EditText harga;
     @BindView(R.id.btn_simpan)
     Button btnSimpan;
+    @BindView(R.id.spinner_kategori)
+    Spinner spinnerKategori;
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -67,45 +72,98 @@ public class TambahBarangActivity extends AppCompatActivity {
     private StorageReference storageReference = firebaseStorage.getReference();
     private String id = "unknown";
     private Context context = TambahBarangActivity.this;
-    private Uri filePath ;
+    private Uri filePath;
+    private ArrayList<String> kategorimodelList = new ArrayList<>();
+    barangmodel barangmodel ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_barang);
         ButterKnife.bind(this);
 
+        //ambil data kategori
+
+        ///cek apakah ini mode edit atau mode rubah
         Intent intent = getIntent();
-        if(intent.hasExtra("id")){
+        if (intent.hasExtra("id")) {
             this.id = intent.getStringExtra("id");
             fetchEdit();
-        }else {
+        } else {
             this.id = databaseReference.push().getKey();
         }
+        fetchKategori();
+
     }
-    public void fetchEdit(){
-        databaseReference.child(globalval.TABLE_BARANG).child(id).addValueEventListener(new ValueEventListener() {
+
+    private void fetchKategori() {
+        databaseReference.child(globalval.TABLE_KATEGORI).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    barangmodel barangmodel = new barangmodel();
-                    barangmodel = dataSnapshot.getValue(barangmodel.class);
-                    etKategori.setText(barangmodel.getKategori());
-                    etNamabarang.setText(barangmodel.getNama());
-                    harga.setText(barangmodel.getHargasewa());
-                }else {
-                    Toast.makeText(context,"Barang Tdak ada",Toast.LENGTH_LONG).show();
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        String namak = data.child("namakategori").getValue(String.class);
+                        kategorimodelList.add(namak);
+
+                    }
+                    final ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
+                            android.R.layout.simple_spinner_item, kategorimodelList);
+
+
+                    spinnerKategori.setAdapter(adapter);
+//                    if (barangmodel.getKategori() != null) {
+//                        int spinnerPosition = adapter.getPosition(barangmodel.getKategori());
+//                        spinnerKategori.setSelection(spinnerPosition);
+//                    }
+                    spinnerKategori.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } else {
+
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(context,"database Error"+databaseError,Toast.LENGTH_LONG).show();
+
             }
         });
     }
+
+    public void fetchEdit() {
+        databaseReference.child(globalval.TABLE_BARANG).child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    barangmodel = dataSnapshot.getValue(barangmodel.class);
+                 //   etKategori.setText(barangmodel.getKategori());
+
+                    etNamabarang.setText(barangmodel.getNama());
+                    harga.setText(barangmodel.getHargasewa());
+                } else {
+                    Toast.makeText(context, "Barang Tdak ada", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(context, "database Error" + databaseError, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     //upload
-    public void upload(){
-        if(cek()){
+    public void upload() {
+        if (cek()) {
             if (filePath != null) {
 
                 // Code for showing progressDialog while uploading
@@ -118,31 +176,31 @@ public class TambahBarangActivity extends AppCompatActivity {
                 StorageReference myref = storageReference.child(globalval.TABLE_BARANG).child("images/" + id);
                 ivGambar.setDrawingCacheEnabled(true);
                 ivGambar.buildDrawingCache();
-                Bitmap bitmap = ((BitmapDrawable)ivGambar.getDrawable()).getBitmap();
+                Bitmap bitmap = ((BitmapDrawable) ivGambar.getDrawable()).getBitmap();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG,80,baos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
                 byte[] data = baos.toByteArray();
 
                 UploadTask uploadTask = myref.putBytes(data);
                 Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()){
-                            throw  task.getException();
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
                         }
                         return myref.getDownloadUrl();
                     }
                 }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Uri donloadUri = task.getResult();
 
                             barangmodel barangmodel = new barangmodel();
                             barangmodel.setGambar(donloadUri.toString());
                             barangmodel.setHargasewa(harga.getText().toString());
                             barangmodel.setIdbarang(id);
-                            barangmodel.setKategori(etKategori.getText().toString());
+                            barangmodel.setKategori(spinnerKategori.getSelectedItem().toString());
                             barangmodel.setIdtoko(firebaseAuth.getCurrentUser().getUid());
                             barangmodel.setNama(etNamabarang.getText().toString());
                             barangmodel.setStokasli(etStok.getText().toString());
@@ -154,30 +212,30 @@ public class TambahBarangActivity extends AppCompatActivity {
                                     .child(id)
                                     .setValue(barangmodel)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(context,"Berhasil",Toast.LENGTH_LONG).show();
-                                    new Handler().postDelayed(new Runnable() {
                                         @Override
-                                        public void run() {
-                                            onBackPressed();
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(context, "Berhasil", Toast.LENGTH_LONG).show();
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    onBackPressed();
+                                                }
+                                            }, 400);
                                         }
-                                    },400);
-                                }
-                            });
-                        }else {
-                          Toast.makeText(context,"gagal",Toast.LENGTH_LONG).show();
+                                    });
+                        } else {
+                            Toast.makeText(context, "gagal", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
             }
-        }else {
-            Toast.makeText(context,"Mohon Isi Semua",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, "Mohon Isi Semua", Toast.LENGTH_LONG).show();
         }
     }
+
     // Select Image method
-    private void SelectImage()
-    {
+    private void SelectImage() {
 
         // Defining Implicit Intent to mobile gallery
         Intent intent = new Intent();
@@ -214,16 +272,15 @@ public class TambahBarangActivity extends AppCompatActivity {
                                 getContentResolver(),
                                 filePath);
                 ivGambar.setImageBitmap(bitmap);
-            }
-
-            catch (IOException e) {
+            } catch (IOException e) {
                 // Log the exception
                 e.printStackTrace();
             }
         }
     }
-    public boolean cek(){
-        return !etKategori.getText().toString().isEmpty() || !etNamabarang.getText().toString().isEmpty() || !etStok.getText().toString().isEmpty()  || !harga.getText().toString().isEmpty();
+
+    public boolean cek() {
+        return  !etNamabarang.getText().toString().isEmpty() || !etStok.getText().toString().isEmpty() || !harga.getText().toString().isEmpty();
     }
 
     @OnClick({R.id.iv_gambar, R.id.btn_simpan})

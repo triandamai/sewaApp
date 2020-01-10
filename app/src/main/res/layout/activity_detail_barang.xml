@@ -68,7 +68,7 @@
         android:id="@+id/tv_harga"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_pesan"
+        android:layout_above="@+id/lladaedit"
         android:text="Rp 5000"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"

@@ -54,11 +54,15 @@
                 android:text="Ketegori"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
-            <EditText
-                android:id="@+id/et_Kategori"
+<!--            <EditText-->
+<!--                android:id="@+id/et_Kategori"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Fitness"/>-->
+            <Spinner
+                android:id="@+id/spinner_kategori"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Fitness"/>
+                android:layout_height="wrap_content"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp"/>
