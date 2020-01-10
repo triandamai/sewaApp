@@ -64,7 +64,11 @@ public class fragment_history_proses extends Fragment {
     }
 
     public void fetchData() {
-        databaseReference.child(globalval.TABLE_TRANSAKSI).orderByChild("idtoko").startAt(firebaseAuth.getCurrentUser().getUid()).endAt(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(globalval.TABLE_TRANSAKSI)
+                .orderByChild("idtoko")
+                .startAt(firebaseAuth.getCurrentUser().getUid())
+                .endAt(firebaseAuth.getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -76,8 +80,13 @@ public class fragment_history_proses extends Fragment {
                         transaksimodel transaksimodel;
                         transaksimodel = data.getValue(transaksimodel.class);
                         transaksimodel.setIdTransaksi(data.getKey());
+                        assert transaksimodel != null;
+                        if (transaksimodel.getStatus().equals(globalval.STATUS_PROSES)){
 
-                        transaksimodels.add(transaksimodel);
+                        }else {
+                            transaksimodels.add(transaksimodel);
+                        }
+
                     }
                     adapter_list_history = new adapter_list_history(getContext(), transaksimodels);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

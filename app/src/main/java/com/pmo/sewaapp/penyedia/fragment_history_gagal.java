@@ -67,7 +67,11 @@ public class fragment_history_gagal extends Fragment {
     }
 
     public void fetchData() {
-        databaseReference.child(globalval.TABLE_TRANSAKSI).orderByChild("idpenyewa").startAt(firebaseAuth.getCurrentUser().getUid()).endAt(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(globalval.TABLE_TRANSAKSI)
+                .orderByChild("idtoko")
+                .startAt(firebaseAuth.getCurrentUser().getUid())
+                .endAt(firebaseAuth.getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -78,13 +82,19 @@ public class fragment_history_gagal extends Fragment {
                         transaksimodel transaksimodel;
                         transaksimodel = data.getValue(transaksimodel.class);
                         transaksimodel.setIdTransaksi(data.getKey());
+                        assert  transaksimodel != null;
+                        if (transaksimodel.getStatus().equals(globalval.STATUS_GAGAL)){
 
-                        transaksimodels.add(transaksimodel);
+                        }else {
+                            transaksimodels.add(transaksimodel);
+                        }
+
                     }
                     adapter_list_history = new adapter_list_history(getContext(), transaksimodels);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                     rvHistory.setLayoutManager(layoutManager);
                     rvHistory.setAdapter(adapter_list_history);
+
                 } else {
                     lladadata.setVisibility(View.GONE);
                     llkosong.setVisibility(View.VISIBLE);

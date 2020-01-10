@@ -161,13 +161,13 @@ public class DetailTransaksi extends AppCompatActivity {
         switch (view.getId()) {
 
             case R.id.btn_selesai:
-                databaseReference.child(globalval.TABLE_TRANSAKSI).child(idTransaksi).child("status").setValue("selesai");
+                databaseReference.child(globalval.TABLE_TRANSAKSI).child(idTransaksi).child("status").setValue(globalval.STATUS_SELESAI);
                 break;
             case R.id.btn_tolak:
-                databaseReference.child(globalval.TABLE_TRANSAKSI).child(idTransaksi).child("status").setValue("ditolak");
+                databaseReference.child(globalval.TABLE_TRANSAKSI).child(idTransaksi).child("status").setValue(globalval.STATUS_GAGAL);
                 break;
             case R.id.btn_terima:
-                databaseReference.child(globalval.TABLE_TRANSAKSI).child(idTransaksi).child("status").setValue("terima");
+                databaseReference.child(globalval.TABLE_TRANSAKSI).child(idTransaksi).child("status").setValue(globalval.STATUS_PROSES);
                 break;
             case R.id.ll_buttonaksi:
 

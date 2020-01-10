@@ -61,16 +61,17 @@ public class SemuaBarangKategori extends AppCompatActivity {
             tampilPerkategori(intent.getStringExtra("Kategori"));
         } else {
             tvTitle.setText("Menampilkan Semua Barang");
-            tampilSemua();
+            tampilPerkategori("");
         }
     }
 
     private void tampilSemua() {
-        databaseReference.child(globalval.TABLE_BARANG).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(globalval.TABLE_BARANG)
+                .orderByChild("waktuditambah").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    barangmodelList.clear();
+
                     llAdadata.setVisibility(View.VISIBLE);
                     llKosong.setVisibility(View.GONE);
                     llLoading.setVisibility(View.GONE);

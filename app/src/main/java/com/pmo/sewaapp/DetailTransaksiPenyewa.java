@@ -134,6 +134,9 @@ public class DetailTransaksiPenyewa extends AppCompatActivity {
                     } else {
                         Picasso.get().load(transaksimodel.getBuktipembayaran()).into(ivGambarBukti);
                     }
+                    if(transaksimodel.getStatus().equalsIgnoreCase(globalval.STATUS_SELESAI) || transaksimodel.getStatus().equalsIgnoreCase(globalval.STATUS_PROSES)){
+                        llButtonaksi.setVisibility(View.GONE);
+                    }
                     databaseReference.child(globalval.TABLE_USER).child(transaksimodel.getIDPENYEWA()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -6,4 +6,11 @@ public class globalval {
     public static String TABLE_BARANG = "BARANG";
     public static String TABLE_TRANSAKSI = "TRANSAKSI";
     public static String TABLE_KATEGORI = "KATEGORI";
+
+    public static String STATUS_GAGAL = "ditolak";
+    public static String STATUS_SELESAI = "selesai";
+    public static String STATUS_PROSES = "diproses";
+    public static String STATUS_SUDAH_BAYAR = "Sudah Membayar Sedang Diproses";
+    public static String STATUS_PERTAMA_PESAN = "Menunggu Pembayaran";
+
 }

@@ -67,10 +67,10 @@ public class CheckoutPesanan extends AppCompatActivity {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private double hargaTotal;
+    private double hargaTotal ;
     private double hargaAwal;
     private int jumlahAwal;
-    private int jumlahTotal;
+    private int jumlahTotal ;
     private String idBarang;
     private barangmodel barangmodel = new barangmodel();
     private Context context = CheckoutPesanan.this;
@@ -110,6 +110,8 @@ public class CheckoutPesanan extends AppCompatActivity {
                     hargaAwal = Double.parseDouble(barangmodel.getHargasewa());
                     Picasso.get().load(barangmodel.getGambar()).into(ivGambarbarang);
                     jumlahAwal = 1;
+                    jumlahTotal = jumlahAwal;
+                    hargaTotal = hargaAwal;
                     jml = Integer.parseInt(barangmodel.getStokasli());
 
                 } else {
@@ -204,7 +206,7 @@ public class CheckoutPesanan extends AppCompatActivity {
         transaksimodel.setIDTOKO(barangmodel.getIdtoko());
         transaksimodel.setAlamat(etAlamat.getText().toString());
         transaksimodel.setBuktipembayaran("1");
-        transaksimodel.setStatus("Menunggu Pembayaran");
+        transaksimodel.setStatus(globalval.STATUS_PERTAMA_PESAN);
         transaksimodel.setJumlah(String.valueOf(this.jumlahTotal));
         transaksimodel.setHarga(String.valueOf(this.hargaTotal));
         transaksimodel.setTglambil(etTanggalAmbil.getText().toString());

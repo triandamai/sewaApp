@@ -64,7 +64,11 @@ public class fragment_history_pesanan_saya extends Fragment {
     }
 
     private void fetchData() {
-        databaseReference.child(globalval.TABLE_TRANSAKSI).orderByChild("idpenyewa").startAt(firebaseAuth.getCurrentUser().getUid()).endAt(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(globalval.TABLE_TRANSAKSI)
+                .orderByChild("idpenyewa")
+                .startAt(firebaseAuth.getCurrentUser().getUid())
+                .endAt(firebaseAuth.getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
@@ -75,8 +79,10 @@ public class fragment_history_pesanan_saya extends Fragment {
                         transaksimodel transaksimodel;
                         transaksimodel = data.getValue(transaksimodel.class);
                         transaksimodel.setIdTransaksi(data.getKey());
+                        assert transaksimodel != null;
 
                         transaksimodels.add(transaksimodel);
+
                     }
                     adapter_list_history = new adapter_list_history(getContext(), transaksimodels);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
