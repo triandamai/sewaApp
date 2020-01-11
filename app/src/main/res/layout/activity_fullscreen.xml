@@ -8,16 +8,11 @@
     tools:context=".FullscreenActivity">
 
 
-    <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="Sewaku"
-        android:textColor="#FF9800"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+  <ImageView
+      android:layout_gravity="center"
+      android:layout_width="250dp"
+      android:layout_height="250dp"
+      android:src="@drawable/logo"/>
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
