@@ -70,6 +70,9 @@ public class adapter_list_barang_toko extends RecyclerView.Adapter<adapter_list_
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        /*
+         * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+         * */
         @BindView(R.id.iv_barang)
         ImageView ivBarang;
         @BindView(R.id.tv_namabarang)

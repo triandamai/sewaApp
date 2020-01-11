@@ -32,6 +32,9 @@ import butterknife.OnClick;
 public class fragment_profile extends Fragment {
 
 
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.tv_Nama)
     TextView tvNama;
     @BindView(R.id.tv_Alamat)
@@ -45,6 +48,7 @@ public class fragment_profile extends Fragment {
     @BindView(R.id.btn_signOut)
     Button btnSignOut;
 
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 

@@ -25,6 +25,7 @@ import com.pmo.sewaapp.penyewa.Penyewa;
 
 
 public class FullscreenActivity extends AppCompatActivity {
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private com.pmo.sewaapp.models.usermodel usermodel;

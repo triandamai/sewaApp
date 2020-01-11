@@ -31,7 +31,9 @@ import butterknife.OnClick;
 
 public class Register extends AppCompatActivity {
 
-
+    /*
+    * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+    * */
     @BindView(R.id.et_nomerTelp)
     EditText etNomerTelp;
     @BindView(R.id.btn_kirimKode)
@@ -45,6 +47,7 @@ public class Register extends AppCompatActivity {
     @BindView(R.id.ll_terimakode)
     LinearLayout llTerimakode;
 
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private Context context = Register.this;
     private String verificationid ;

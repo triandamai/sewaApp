@@ -16,6 +16,9 @@ import butterknife.ButterKnife;
 
 public class Penyedia extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.fl_container)
     FrameLayout flContainer;
     @BindView(R.id.bottom_nav)

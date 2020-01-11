@@ -41,6 +41,9 @@ import butterknife.OnClick;
 
 public class fragment_toko extends Fragment {
 
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.btn_buattoko)
     Button btnBuattoko;
     @BindView(R.id.toko_kosong)
@@ -64,6 +67,7 @@ public class fragment_toko extends Fragment {
     @BindView(R.id.rl_fab)
     RelativeLayout rlFab;
 
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private List<barangmodel> listBarang = new ArrayList<>();

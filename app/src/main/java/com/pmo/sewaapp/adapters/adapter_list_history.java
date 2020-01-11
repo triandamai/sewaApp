@@ -100,6 +100,9 @@ public class adapter_list_history extends RecyclerView.Adapter<adapter_list_hist
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        /*
+         * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+         * */
         @BindView(R.id.tv_namaBarang)
         TextView tvNamaBarang;
         @BindView(R.id.tv_alamat)

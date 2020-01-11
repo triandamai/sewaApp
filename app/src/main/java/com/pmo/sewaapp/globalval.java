@@ -1,6 +1,10 @@
 package com.pmo.sewaapp;
 
 public class globalval {
+
+    /*
+     * Kumpulan Variabel static global untuk memudahkan identifikasi child pada firebase
+     * */
     public static String TABLE_USER = "USER";
     public static String TABLE_TOKO = "TOKO";
     public static String TABLE_BARANG = "BARANG";

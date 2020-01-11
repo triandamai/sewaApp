@@ -40,6 +40,9 @@ import butterknife.OnClick;
 public class CheckoutPesanan extends AppCompatActivity {
 
 
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.iv_gambarbarang)
     ImageView ivGambarbarang;
     @BindView(R.id.tv_namabarang)
@@ -65,6 +68,7 @@ public class CheckoutPesanan extends AppCompatActivity {
     @BindView(R.id.et_tanggal_kembali)
     EditText etTanggalKembali;
 
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private double hargaTotal ;

@@ -42,6 +42,9 @@ import butterknife.OnClick;
 
 public class BuattokoActivity extends AppCompatActivity {
 
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.iv_prev_banner)
     ImageView ivPrevBanner;
     @BindView(R.id.et_namaToko)
@@ -61,7 +64,8 @@ public class BuattokoActivity extends AppCompatActivity {
     // request code
     private final int PICK_IMAGE_REQUEST = 22;
 
-    // instance for firebase storage and StorageReference
+
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseStorage storage;

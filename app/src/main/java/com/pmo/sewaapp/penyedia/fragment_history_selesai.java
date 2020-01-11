@@ -31,6 +31,9 @@ import butterknife.ButterKnife;
 
 public class fragment_history_selesai extends Fragment {
 
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.rv_history)
     RecyclerView rvHistory;
     @BindView(R.id.lladadata)
@@ -40,6 +43,7 @@ public class fragment_history_selesai extends Fragment {
     @BindView(R.id.ll_kosong)
     LinearLayout llKosong;
 
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private List<transaksimodel> transaksimodels = new ArrayList<>();

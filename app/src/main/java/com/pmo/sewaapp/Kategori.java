@@ -28,11 +28,15 @@ import butterknife.ButterKnife;
 
 public class Kategori extends AppCompatActivity {
 
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.rv_kategori)
     RecyclerView rvKategori;
     @BindView(R.id.ll_kosong)
     LinearLayout llKosong;
 
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private Context context = Kategori.this;

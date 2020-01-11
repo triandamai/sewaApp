@@ -21,10 +21,14 @@ import butterknife.ButterKnife;
 
 public class fragment_history extends Fragment {
 
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.tab_lay)
     TabLayout tabLay;
     @BindView(R.id.vp)
     ViewPager vp;
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 

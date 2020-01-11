@@ -46,8 +46,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DetailTransaksiPenyewa extends AppCompatActivity {
-
+    /*
+    * variabel untuk request gambar degan gallery
+    * */
     private static final int PICK_IMAGE_REQUEST = 33;
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.iv_gambar_bukti)
     ImageView ivGambarBukti;
     @BindView(R.id.tv_namaPenyewa)
@@ -65,6 +70,7 @@ public class DetailTransaksiPenyewa extends AppCompatActivity {
     @BindView(R.id.tv_waktu)
     TextView tvWaktu;
 
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();

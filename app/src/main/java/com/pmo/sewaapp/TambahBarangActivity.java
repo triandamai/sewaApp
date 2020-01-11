@@ -49,14 +49,14 @@ import butterknife.OnClick;
 
 public class TambahBarangActivity extends AppCompatActivity {
 
-//deklarasi semua var
+    /*
+     * TODO ::Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     private static final int PICK_IMAGE_REQUEST = 21;
     @BindView(R.id.iv_gambar)
     ImageView ivGambar;
     @BindView(R.id.et_Namabarang)
     EditText etNamabarang;
-//    @BindView(R.id.et_Kategori)
-//    EditText etKategori;
     @BindView(R.id.et_Stok)
     EditText etStok;
     @BindView(R.id.harga)
@@ -66,6 +66,7 @@ public class TambahBarangActivity extends AppCompatActivity {
     @BindView(R.id.spinner_kategori)
     Spinner spinnerKategori;
 
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();

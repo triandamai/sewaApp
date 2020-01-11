@@ -28,17 +28,19 @@ import butterknife.OnClick;
 
 public class LengkapiBiodataActivity extends AppCompatActivity {
 
+    /*
+     * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+     * */
     @BindView(R.id.et_Nama)
     EditText etNama;
     @BindView(R.id.et_Email)
     EditText etEmail;
-//    @BindView(R.id.et_Nohp)
-//    EditText etNohp;
    @BindView(R.id.et_Alamat)
     EditText etAlamat;
     @BindView(R.id.btn_simpan)
     Button btnSimpan;
 
+    //TODO:: inisiasi kebutuhan firebase (firbase authentication,realtime database,firebase storage)
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 

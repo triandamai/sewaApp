@@ -55,6 +55,9 @@ public class adapter_list_kategori extends RecyclerView.Adapter<adapter_list_kat
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        /*
+         * Membuat view binding (Pengganti findview by id ) dengan BUtter knife
+         * */
         @BindView(R.id.cv_parent)
         CardView cvParent;
         @BindView(R.id.tv_namakategori)
