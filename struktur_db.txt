@@ -1,0 +1,34 @@
+- User
+	-uid
+		- Nama
+		- Nohp
+		- Email
+		- Alamat
+		- Level
+		- TerakhirOnline
+- Barang
+	-push id
+		- Namabarang
+		- Kategori
+		- id_Toko
+		- StokTersedia
+		- StokAsli
+		- Harga Sewa
+- Toko
+	- uid
+		- NamaToko
+		- AlamatToko
+		- PemilikToko
+		- BannerToko
+
+- Transaksi
+	- IDTRANSAKSI(push id)
+		- IDPENYEWA
+		- IDBARANG
+		- IDTOKO
+		- AlamatSewa
+		- BuktiPembayaran
+		- Status(menunggupembayaran,lunas,diantar,disewa,selesai,)
+		- Jumlah
+		- Total
+		- Tanggal
