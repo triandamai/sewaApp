@@ -48,6 +48,7 @@ public class LengkapiBiodataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lengkapi_biodata);
+        //Membinding view dari @BindView
         ButterKnife.bind(this);
         Intent intent = getIntent();
 
@@ -63,7 +64,9 @@ public class LengkapiBiodataActivity extends AppCompatActivity {
 
     private void setVAl() {
         //ambil data untuk diset
-        databaseReference.child(globalval.TABLE_USER).child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(globalval.TABLE_USER)
+                .child(firebaseAuth.getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){

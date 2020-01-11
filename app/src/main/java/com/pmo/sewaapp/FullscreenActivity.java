@@ -33,9 +33,12 @@ public class FullscreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
+        //TODO :: Cek apakah firebase auth nya sudah login ?
         if(firebaseAuth.getUid()!=null  ){
-            //firebaseAuth.signOut();
-            databaseReference.child(globalval.TABLE_USER).child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+            //sudah login dan di cek ke database datanya ada atau tidak
+            databaseReference.child(globalval.TABLE_USER)
+                    .child(firebaseAuth.getUid())
+                    .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
@@ -44,13 +47,16 @@ public class FullscreenActivity extends AppCompatActivity {
                         String hp = dataSnapshot.child("nohp").getValue(String.class);
                         String level = dataSnapshot.child("level").getValue(String.class);
                         if(nama == null || email == null || hp == null || level == null){
+                            //jika kosong akan diarahkan mengisi Biodata
                             startActivity(new Intent(FullscreenActivity.this,LengkapiBiodataActivity.class));
                             finish();
                         }else {
+                            //ijka tidak kosong akan lanjut ke Activity Home
                             startActivity(new Intent(FullscreenActivity.this, Penyedia.class));
                             finish();
                         }
                     }else {
+                        //jika kosong akan diarahkan mengisi Biodata
                         Toast.makeText(FullscreenActivity.this,"Tidak ada satupun data",Toast.LENGTH_LONG).show();
                         startActivity(new Intent(FullscreenActivity.this,LengkapiBiodataActivity.class));
                         finish();

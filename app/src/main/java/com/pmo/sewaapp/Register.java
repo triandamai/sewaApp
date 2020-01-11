@@ -57,17 +57,20 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        //Membinding view dari @BindView
         ButterKnife.bind(this);
 
         llInputnomer.setVisibility(View.VISIBLE);
         llTerimakode.setVisibility(View.GONE);
     }
 
+    //method mengirim kode ke nomer hp
     public void sendAuthenticationCode(String phonenumber) {
         Toast.makeText(context, "Mengirim", Toast.LENGTH_LONG).show();
         PhoneAuthProvider.getInstance().verifyPhoneNumber("+62"+phonenumber, 60, TimeUnit.SECONDS, this, callback);
     }
 
+    //method masuk dengan kode yang sudah didapat dan memasukkan data ke database
     public void signInwithPhoneNumber(PhoneAuthCredential phoneAuthCredential) {
         Toast.makeText(context, "Memverifikasi..", Toast.LENGTH_LONG).show();
         firebaseAuth.signInWithCredential(phoneAuthCredential)
@@ -75,7 +78,9 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            //jika berhasil
                             Toast.makeText(context, "Berhasil", Toast.LENGTH_LONG).show();
+                            //simpan ke database
                             databaseReference
                                     .child(globalval.TABLE_USER)
                                     .child(firebaseAuth.getUid())
@@ -96,6 +101,7 @@ public class Register extends AppCompatActivity {
                 });
     }
 
+    //method onclick
     @OnClick({R.id.btn_kirimKode, R.id.btn_Verifikasi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -117,23 +123,27 @@ public class Register extends AppCompatActivity {
         }
     }
 
+    //Interface untuk listener apakah ada kode masuk atau tidak
     PhoneAuthProvider.OnVerificationStateChangedCallbacks callback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        //jika da kode dan terbaca akan otomatis memverifikasi
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 etVerifikasi.setText(code);
-             //   firebaseAuth.signInWithCredential(phoneAuthCredential);
+
                 signInwithPhoneNumber(phoneAuthCredential);
             }
 
         }
 
+        //ketika gagal
         @Override
         public void onVerificationFailed(FirebaseException e) {
             Toast.makeText(context, "Verifikasi gagal" + e.toString(), Toast.LENGTH_LONG).show();
         }
 
+        //jika code berhasi dikirim
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);

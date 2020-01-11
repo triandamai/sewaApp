@@ -55,33 +55,41 @@ public class SemuaBarangKategori extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_semua_barang_kategori);
+        //Membinding view dari @BindView
         ButterKnife.bind(this);
         llAdadata.setVisibility(View.GONE);
         llKosong.setVisibility(View.GONE);
         llLoading.setVisibility(View.VISIBLE);
+
+        //cek apakah ada data kategori dari activity sebelumnya
         Intent intent = getIntent();
         if (intent.hasExtra("Kategori")) {
+            //jika ada ambil data sesuai kategori dari data activity sebelumnya
             tvTitle.setText("Menampilkan " + intent.getStringExtra("Kategori"));
 
             tampilPerkategori(intent.getStringExtra("Kategori"));
         } else {
+            //jika tidak ambil semua data
             tvTitle.setText("Menampilkan Semua Barang");
             tampilSemua();
         }
     }
 
     private void tampilSemua() {
+        //ambil data diurutkan berdasarkan waktu ditambahkan
         databaseReference.child(globalval.TABLE_BARANG)
                 .orderByChild("waktuditambah")
                 .limitToLast(20).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    //jika datanya ada
                     barangmodelList.clear();
                     Toast.makeText(context,"ada",Toast.LENGTH_LONG).show();
                     llAdadata.setVisibility(View.VISIBLE);
                     llKosong.setVisibility(View.GONE);
                     llLoading.setVisibility(View.GONE);
+                    //loop sesuai banyak data dan masukkan ke data model
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         barangmodel barangmodel;
                         barangmodel = data.getValue(barangmodel.class);
@@ -90,11 +98,13 @@ public class SemuaBarangKategori extends AppCompatActivity {
                         barangmodelList.add(barangmodel);
                     }
 
+                    //data yang di loop akan di lempar ke adapter dan ditampilkan ke adapter
                     adapter = new adapter_list_barang_kategori(context, barangmodelList);
                     RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 2);
                     rvSemuaBarang.setLayoutManager(layoutManager);
                     rvSemuaBarang.setAdapter(adapter);
                 } else {
+                    //jika datanya kosong
                     Toast.makeText(context,"Ga ada",Toast.LENGTH_LONG).show();
                     llAdadata.setVisibility(View.GONE);
                     llKosong.setVisibility(View.VISIBLE);
@@ -110,14 +120,20 @@ public class SemuaBarangKategori extends AppCompatActivity {
     }
 
     private void tampilPerkategori(String kategori) {
-        databaseReference.child(globalval.TABLE_BARANG).orderByChild("kategori").startAt(kategori).endAt(kategori).addValueEventListener(new ValueEventListener() {
+        //ambil data sesuai kategori dengan method orderby('nama child")
+        databaseReference.child(globalval.TABLE_BARANG)
+                .orderByChild("kategori")
+                .startAt(kategori)
+                .endAt(kategori).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    //jika data ada
                     barangmodelList.clear();
                     llAdadata.setVisibility(View.VISIBLE);
                     llKosong.setVisibility(View.GONE);
                     llLoading.setVisibility(View.GONE);
+                    //loop sebanyak data dan masukkan ke data model
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         barangmodel barangmodel;
                         barangmodel = data.getValue(barangmodel.class);
@@ -126,6 +142,7 @@ public class SemuaBarangKategori extends AppCompatActivity {
                         barangmodelList.add(barangmodel);
                     }
 
+                    //data yang sudah diloop akan dilempar ke adapter yang kemudian ditampilkan ke recyclerview
                     adapter = new adapter_list_barang_kategori(context, barangmodelList);
                     RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 2);
                     rvSemuaBarang.setLayoutManager(layoutManager);

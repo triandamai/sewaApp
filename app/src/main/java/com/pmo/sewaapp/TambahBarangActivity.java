@@ -81,6 +81,7 @@ public class TambahBarangActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_barang);
+        //mem Binding view dari @BindView
         ButterKnife.bind(this);
 
         //ambil data kategori
@@ -89,10 +90,13 @@ public class TambahBarangActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra("id")) {
             this.id = intent.getStringExtra("id");
+            //menampilkan data ke masing-masing edittext
             fetchEdit();
         } else {
+            //menentukan key dari firebase
             this.id = databaseReference.push().getKey();
         }
+        //ambil data danmenampilkan
         fetchKategori();
 
     }
@@ -101,7 +105,9 @@ public class TambahBarangActivity extends AppCompatActivity {
         databaseReference.child(globalval.TABLE_KATEGORI).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //jika ada data
                 if (dataSnapshot.exists()) {
+                    //loop sebanyak data dan masukkan ke data model
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         String namak = data.child("namakategori").getValue(String.class);
                         kategorimodelList.add(namak);
@@ -112,10 +118,7 @@ public class TambahBarangActivity extends AppCompatActivity {
 
 
                     spinnerKategori.setAdapter(adapter);
-//                    if (barangmodel.getKategori() != null) {
-//                        int spinnerPosition = adapter.getPosition(barangmodel.getKategori());
-//                        spinnerKategori.setSelection(spinnerPosition);
-//                    }
+
                     spinnerKategori.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -128,7 +131,7 @@ public class TambahBarangActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-
+                //jika kosong (tidak ada data
                 }
             }
 
@@ -145,12 +148,12 @@ public class TambahBarangActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
+                    //jika ada data ambil datanya masukkan ke data model
                     barangmodel = dataSnapshot.getValue(barangmodel.class);
-                 //   etKategori.setText(barangmodel.getKategori());
-
                     etNamabarang.setText(barangmodel.getNama());
                     harga.setText(barangmodel.getHargasewa());
                 } else {
+                    //jika tidak ada
                     Toast.makeText(context, "Barang Tdak ada", Toast.LENGTH_LONG).show();
                 }
             }

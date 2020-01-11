@@ -47,10 +47,12 @@ public class Kategori extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kategori);
+        //membinding view dari @bindView
         ButterKnife.bind(this);
         fetchData();
     }
 
+    //ambil data ketgori
     private void fetchData() {
         databaseReference.child(globalval.TABLE_KATEGORI).addValueEventListener(new ValueEventListener() {
             @Override
@@ -66,6 +68,7 @@ public class Kategori extends AppCompatActivity {
                         assert kategorimodel != null;
                         kategorimodelList.add(kategorimodel);
                     }
+                    //tampilkan ke recyclerview
                     adapter = new adapter_list_kategori(context, kategorimodelList);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                     rvKategori.setLayoutManager(layoutManager);
