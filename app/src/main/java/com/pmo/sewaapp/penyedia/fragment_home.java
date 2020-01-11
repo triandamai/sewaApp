@@ -134,6 +134,7 @@ public class fragment_home extends Fragment {
     }
 
 
+    ///ambil data untuk recyclerview
     public void fetchTerbaru() {
         databaseReference.child(globalval.TABLE_BARANG)
                 .orderByChild("waktuditambah")

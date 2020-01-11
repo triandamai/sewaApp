@@ -26,7 +26,7 @@
                 android:textSize="24sp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:text="Trian Damai"/>
+                android:text="Izan Izan"/>
             <TextView
                 android:id="@+id/tv_Alamat"
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 android:textSize="24sp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:text="trian@gmail.com"/>
+                android:text="jono@gmail.com"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="40dp"/>
